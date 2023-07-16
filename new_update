@@ -1,0 +1,3 @@
+curl -H "Authorization: token YOUR_PERSONAL_ACCESS_TOKEN" \
+     -H "Accept: application/vnd.github.v3.raw" \
+     https://YOUR_GITHUB_ENTERPRISE_HOST/api/v3/repos/OWNER/REPO/contents/PATH_TO_FILE
