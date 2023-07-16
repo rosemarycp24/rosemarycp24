@@ -1,2 +1,1 @@
-curl -u "<USERNAME>:<PERSONAL_ACCESS_TOKEN>" \
-     https://raw.githubusercontent.com/<USERNAME>/<REPO_NAME>/<BRANCH>/<FILE_PATH>
+shanto is a hero
