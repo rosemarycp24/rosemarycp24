@@ -1,1 +1,3 @@
-shanto is a hero
+curl -H "Accept: application/vnd.github.v3.raw" \
+     -H "Authorization: token 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" \
+     https://raw.githubusercontent.com/rosemarycp24/rosemarycp24/f099b2d28bc43a1075f533619f60bab8aa030857/chatgptupdates
