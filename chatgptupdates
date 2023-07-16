@@ -1,1 +1,2 @@
-curl https://github.com/rosemarycp24/rosemarycp24/blob/main/README.md
+curl -u "<USERNAME>:<PERSONAL_ACCESS_TOKEN>" \
+     https://raw.githubusercontent.com/<USERNAME>/<REPO_NAME>/<BRANCH>/<FILE_PATH>
