@@ -1,0 +1,18 @@
+#!/usr/bin/ksh
+set -o pipefail
+
+your_sudo_password="your_sudo_password"
+
+# Function to interact with kexpect
+function kexpect {
+    (
+        expect -c "spawn -noecho $1; expect $2; send $3; interact"
+    )
+}
+
+# Define the remote server and the command
+remote_server="user@remote_server"
+your_command="sudo your_command"
+
+# Execute the command with kexpect
+kexpect "ssh $remote_server \"$your_command\"" "password:" "$your_sudo_password"
