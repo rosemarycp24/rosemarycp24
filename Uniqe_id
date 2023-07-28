@@ -1,0 +1,23 @@
+#!/bin/ksh
+
+# Access the build number
+build_number="%system.build.number%"
+
+# Get the current date in DD-MMM-YYYY format
+current_date=$(date +"%d-%b-%Y")
+
+# Create a unique ID with the current date and build number
+unique_id="${current_date}_${build_number}"
+
+# Print the unique ID for verification
+echo "Generated Unique ID: $unique_id"
+
+# Save the unique ID as a TeamCity build parameter
+echo "##teamcity[setParameter name='env.UNIQUE_ID' value='$unique_id']"
+This updated script uses the date command to get the current date in the "DD-MMM-YYYY" format and then concatenates it with the build_number to form the unique_id. The rest of the script remains the same, printing the unique ID and setting it as the UNIQUE_ID build parameter using the TeamCity service message ##teamcity[setParameter].
+
+
+
+
+
+Regenerate
