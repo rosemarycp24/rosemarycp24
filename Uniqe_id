@@ -5,11 +5,13 @@ build_number="%system.build.number%"
 
 # Get the current date in DD-MMM-YYYY format
 current_date=$(date +"%d-%b-%Y")
+# Extract the month in MMM format
+current_month=$(date +"%b")
 # Convert the month abbreviation to uppercase
-current_date=$(echo "$current_date" | tr '[:lower:]' '[:upper:]')
+current_month=$(echo "$current_month" | tr '[:lower:]' '[:upper:]')
 
 # Create a unique ID with the current date and build number
-unique_id="${current_date}-${build_number}"
+unique_id="${current_date}-${current_month}-${build_number}"
 
 # Print the unique ID for verification
 echo "Generated Unique ID: $unique_id"
