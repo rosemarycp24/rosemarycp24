@@ -10,8 +10,14 @@ current_month=$(date +"%b")
 # Convert the month abbreviation to uppercase
 current_month=$(echo "$current_month" | tr '[:lower:]' '[:upper:]')
 
+# Get the day component from the current date (DD)
+day_component=$(date +"%d")
+
+# Remove any leading zeros from the day component
+day_component="${day_component##+(0)}"
+
 # Create a unique ID with the current date and build number
-unique_id="${current_date}-${current_month}-${build_number}"
+unique_id="${day_component}-${current_month}-${build_number}"
 
 # Print the unique ID for verification
 echo "Generated Unique ID: $unique_id"
