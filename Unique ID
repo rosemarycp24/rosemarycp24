@@ -1,0 +1,13 @@
+#!/bin/ksh
+
+# Access the build number
+build_number="%system.build.number%"
+
+# Create a unique ID with a custom prefix
+unique_id="my_project_build_${build_number}"
+
+# Print the unique ID for verification
+echo "Generated Unique ID: $unique_id"
+
+# Save the unique ID as a TeamCity build parameter
+echo "##teamcity[setParameter name='env.UNIQUE_ID' value='$unique_id']"
