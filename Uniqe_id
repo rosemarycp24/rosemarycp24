@@ -17,7 +17,7 @@ day_component=$(date +"%d")
 day_component="${day_component##+(0)}"
 
 # Create a unique ID with the current date and build number
-unique_id="${day_component}-${current_month}-${build_number}"
+unique_id="${day_component}-${current_month}-$(date +"%Y")-${build_number}"
 
 # Print the unique ID for verification
 echo "Generated Unique ID: $unique_id"
