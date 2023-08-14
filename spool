@@ -1,7 +1,9 @@
- `sqlplus -S -M "HTML ON" -silent /@REX_APP_DB <<EOF
-           SET PAGESIZE 100 FEEDBACK OFF VERIFY OFF ECHO OFF HEADING ON MARKUP ON
+SET PAGESIZE 100 FEEDBACK OFF VERIFY OFF ECHO OFF HEADING ON MARKUP OFF
            SPOOL /home/chowarro-adm/history.html
-           select * from rex_app.cicd_deployment_status;
+           m_db run /ab/sand/chowarro-adm/sand/IBM/Rex/Private/rex/db/rex_app.dbc  -sqlfile rolback_frtb_rex_app_db_objects.sql
            SPOOL OFF
-           EXIT;
-           EOF`
+           EXIT
+           EOF
+EOF
++ ERROR: ORA-01017: invalid 'username/password;' logon denied SP2-0306: Invalid option. Usage: 'CONN[ECT]' '[{logon|/|proxy}' '[AS' '{SYSDBA|SYSOPER|SYSASM|SYSBACKUP|SYSDG|SYSKM|SYSRAC}]' '[edition=value]]' where '<logon>' '::=' '<username>[/<password>][@<connect_identifier>]' '<proxy>' '::=' '<proxyuser>[<username>][/<password>][@<connect_identifier>]' SP2-0306: Invalid option. Usage: 'CONN[ECT]' '[{logon|/|proxy}' '[AS' '{SYSDBA|SYSOPER|SYSASM|SYSBACKUP|SYSDG|SYSKM|SYSRAC}]' '[edition=value]]' where '<logon>' '::=' '<username>[/<password>][@<connect_identifier>]' '<proxy>' '::=' '<proxyuser>[<username>][/<password>][@<connect_identifier>]' SP2-0157: unable to CONNECT to ORACLE after 3 attempts, exiting 'SQL*Plus'
+rollback_back.ksh[34]: ERROR:: not found [No such file or directory]
