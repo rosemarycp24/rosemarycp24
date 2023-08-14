@@ -1,0 +1,7 @@
+ `sqlplus -S -M "HTML ON" -silent /@REX_APP_DB <<EOF
+           SET PAGESIZE 100 FEEDBACK OFF VERIFY OFF ECHO OFF HEADING ON MARKUP ON
+           SPOOL /home/chowarro-adm/history.html
+           select * from rex_app.cicd_deployment_status;
+           SPOOL OFF
+           EXIT;
+           EOF`
