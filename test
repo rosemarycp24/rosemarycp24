@@ -1,0 +1,1 @@
+export tag_name =`$(echo "$c" | sed -r 's/.sav//')`
