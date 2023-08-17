@@ -1,3 +1,10 @@
+sqlplus -S username/password@database << EOF
+VARIABLE my_value VARCHAR2(100);
+EXEC :my_value := '$my_value';
+INSERT INTO your_table (text_column) VALUES (:my_value);
+EXIT;
+EOF
+
 SQL>   2    3    4  SQL> SP2-0734: unknown command beginning "Copyright ..." - rest of line ignored.
 SQL> SQL> SQL> SQL> SQL> SQL> SQL> SQL> SP2-0734: unknown command beginning "Last Succe..." - rest of line ignored.
 SQL> SQL> SP2-0734: unknown command beginning "Connected ..." - rest of line ignored.
