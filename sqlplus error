@@ -1,3 +1,24 @@
+#!/bin/ksh
+
+input_string="Text with special characters: 'Hello!', /path/to/file.txt"
+
+# Define the set of special characters you want to remove
+special_characters="['\"\\/;&%_]"
+
+# Use sed to remove the special characters
+cleaned_string=$(echo "$input_string" | sed "s/[$special_characters]//g")
+
+echo "Original: $input_string"
+echo "Cleaned:  $cleaned_string"
+
+
+
+
+
+
+
+
+
 sqlplus -S username/password@database << EOF
 VARIABLE my_value VARCHAR2(100);
 EXEC :my_value := '$my_value';
