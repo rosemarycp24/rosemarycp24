@@ -1,5 +1,55 @@
 #!/bin/ksh
 
+# Read log file contents into a variable
+log_content=$(<path_to_your_log_file.txt)
+
+# Oracle database connection details
+DB_USER="your_username"
+DB_PASSWORD="your_password"
+DB_SID="your_sid"
+
+# SQL*Plus command
+sqlplus -S ${DB_USER}/${DB_PASSWORD}@${DB_SID} <<EOF
+SET SERVEROUTPUT ON
+DECLARE
+    v_log_content CLOB;
+BEGIN
+    -- Assign log content to CLOB variable
+    v_log_content := :log_content;
+
+    -- Insert into the CLOB column using a parameterized query
+    INSERT INTO your_table_name (clob_column_name)
+    VALUES (v_log_content);
+    
+    COMMIT;
+    
+    DBMS_OUTPUT.PUT_LINE('Insert successful');
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+        ROLLBACK;
+END;
+/
+EXIT;
+EOF
+
+
+
+
+
+
+
+
+
+===============================================================
+
+
+
+
+
+
+#!/bin/ksh
+
 # Read the value from the file
 oracle_log=$(<"$HOME/20230817145556_sql_rollback_log.txt")
 abinitio_log=$(<"$HOME/20230817145556_abinitio_log.txt")
