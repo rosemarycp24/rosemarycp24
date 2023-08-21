@@ -33,11 +33,24 @@ END;
 EXIT;
 EOF
 
-/home/chowarro-adm/20230821094257_sql_rollback_log.txt[2]: SQL*Plus:: not found [No such file or directory]
-/home/chowarro-adm/20230821094257_sql_rollback_log.txt[3]: Version: not found [No such file or directory]
-/home/chowarro-adm/20230821094257_sql_rollback_log.txt: line 3: syntax error at line 5: `(' unexpected
+
 SP2-0552: Bind variable "LOG_CONTENT" not declared.
 
+
+ VARIABLE v_log_content CLOB;
+                         *
+ERROR at line 2:
+ORA-06550: line 2, column 26:
+PLS-00103: Encountered the symbol "CLOB" when expecting one of the following:
+:= . ( @ % ; not null range default character
+The symbol ":=" was substituted for "CLOB" to continue.
+ORA-06550: line 9, column 11:
+PLS-00103: Encountered the symbol "VALUES" when expecting one of the following:
+( mod <an identifier> <a double-quoted delimited-identifier>
+<a bind variable> continue current sql execute forall merge
+pipe purge json_exists json_value json_query json_object
+json_array
+The symbol "VALUES" was ignored.
 
 
 
