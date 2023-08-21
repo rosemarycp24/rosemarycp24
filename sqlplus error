@@ -33,7 +33,10 @@ END;
 EXIT;
 EOF
 
-
+/home/chowarro-adm/20230821094257_sql_rollback_log.txt[2]: SQL*Plus:: not found [No such file or directory]
+/home/chowarro-adm/20230821094257_sql_rollback_log.txt[3]: Version: not found [No such file or directory]
+/home/chowarro-adm/20230821094257_sql_rollback_log.txt: line 3: syntax error at line 5: `(' unexpected
+SP2-0552: Bind variable "LOG_CONTENT" not declared.
 
 
 
