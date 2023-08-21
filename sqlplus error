@@ -55,6 +55,18 @@ The symbol "VALUES" was ignored.
 
 
 
+ERROR at line 2:
+ORA-06550: line 2, column 26:
+PLS-00103: Encountered the symbol "CLOB" when expecting one of the following:
+:= . ( @ % ; not null range default character
+The symbol ":=" was substituted for "CLOB" to continue.
+ORA-06550: line 10, column 108:
+PLS-00103: Encountered the symbol ")" when expecting one of the following:
+, * & = - + ; < / > at in is mod remainder not rem return
+returning <an exponent (**)> <> or != or ~= >= <= <> and or
+like like2 like4 likec between || multiset member submultiset
+The symbol "; was inserted before ")" to continue.
+
 
 
 ===============================================================
