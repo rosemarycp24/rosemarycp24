@@ -1,0 +1,24 @@
+#!/bin/ksh
+
+# Set Artifactory details
+artifactoryUrl="https://your-artifactory-url"
+repoKey="your-repo-key"
+filePath="path/to/your/file.tar"  # Specify the path to the file in Artifactory
+downloadPath="/tmp"  # Temporary download location on the Octopus Server
+
+# Set Artifactory credentials
+artifactoryUsername="your-username"
+artifactoryPassword="your-password"
+
+# Build the URL for the artifact
+artifactUrl="$artifactoryUrl/$repoKey/$filePath"
+
+# Download the artifact using curl
+curl -u "$artifactoryUsername:$artifactoryPassword" -o "$downloadPath/file.tar" "$artifactUrl"
+
+# Check if the download was successful
+if [ $? -eq 0 ]; then
+    echo "File downloaded to Octopus Server successfully."
+else
+    echo "File download to Octopus Server failed."
+fi
