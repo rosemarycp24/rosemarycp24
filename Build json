@@ -1,0 +1,27 @@
+#!/bin/ksh
+
+# Build Information
+build_name="MyApp"
+build_version="1.0"
+build_timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+
+# Source Code Information
+repository_url="https://github.com/myuser/myapp.git"
+commit_hash=$(git rev-parse HEAD)
+commit_message=$(git log -1 --pretty=format:%s)
+
+# Output Build JSON
+cat <<EOF > build.json
+{
+  "build_name": "$build_name",
+  "build_version": "$build_version",
+  "build_timestamp": "$build_timestamp",
+  "source_code": {
+    "repository_url": "$repository_url",
+    "commit_hash": "$commit_hash",
+    "commit_message": "$commit_message"
+  }
+}
+EOF
+
+echo "Build JSON created: build.json"
