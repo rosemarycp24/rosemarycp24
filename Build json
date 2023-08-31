@@ -25,3 +25,22 @@ cat <<EOF > build.json
 EOF
 
 echo "Build JSON created: build.json"
+
+==================================================
+#!/bin/ksh
+
+# Build JSON Upload Settings
+remote_server="your-remote-server"
+remote_user="your-remote-user"
+remote_path="/path/to/destination"
+
+# Upload Build JSON using curl
+curl -u "$remote_user" -T build.json "sftp://$remote_server$remote_path"
+
+# Check if the upload was successful
+if [ $? -eq 0 ]; then
+    echo "Build JSON uploaded successfully."
+else
+    echo "Build JSON upload failed."
+fi
+
