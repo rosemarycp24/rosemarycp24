@@ -1,3 +1,52 @@
+#!/bin/ksh
+
+# Build Info JSON Data
+build_json='
+{
+  "version": "1.0",
+  "name": "MyApp",
+  "number": "123",
+  "type": "generic",
+  "started": "2023-08-31T10:00:00Z",
+  "modules": [
+    {
+      "id": "com.example:myapp",
+      "artifacts": [
+        {
+          "type": "jar",
+          "sha1": "abc123",
+          "md5": "def456",
+          "name": "myapp.jar"
+        }
+      ],
+      "dependencies": [
+        {
+          "id": "org.springframework:spring-core",
+          "type": "jar",
+          "scopes": ["compile"]
+        }
+      ]
+    }
+  ]
+}
+'
+
+# Save Build Info JSON to a file
+echo "$build_json" > build.json
+
+# Artifactory URL and repository path
+artifactory_url="https://your-artifactory-url"
+repository_path="path/to/artifactory/repo"
+
+# Upload Build Info JSON to Artifactory using cURL
+curl -u username:password -X PUT "$artifactory_url/$repository_path/build.json" -T build.json
+
+# Clean up: Remove the temporary JSON file
+rm build.json
+
+
+
+0000000000000//////////////////////////////////////
 # Example cURL command
 curl -u username:password -X POST "https://your-artifactory-url/api/build" -T path/to/build.json
 
