@@ -2,6 +2,7 @@ curl -u username:password -X PUT -H "Content-Type: application/json" -T build.js
 
 
 
+curl -u "acoe_rex_build:Vl1mH*OMv5:r3!1F" -X PUT -H "Content-Type: application/json" -T build.json "https://artifactory.internal.cba/builds/Test/build.json"
 
 
 3333
