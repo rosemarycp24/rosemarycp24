@@ -1,5 +1,6 @@
 curl -u "username:password"  -X PUT "https://artifactory.internal.cba/api/build/?buildRepo=artifactory-build-info" -H "Content-Type: application/json" --upload-file build.json
 
+curl -u "username:password" -X PUT "https://artifactory.internal.cba/api/build/?buildRepo=artifactory-build-info" -H "Content-Type: application/json" -H "xlink:href: https://your-link-here" --upload-file build.json
 
 
 
