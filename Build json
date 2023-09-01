@@ -1,3 +1,10 @@
+curl -u username:password -X PUT -H "Content-Type: application/json" -T build.json "https://your-artifactory-url/repo/path/to/build-info/build.json"
+
+
+
+
+
+3333
 import paramiko
 from scp import SCPClient
 
