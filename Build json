@@ -1,3 +1,42 @@
+# Example cURL command
+curl -u username:password -X POST "https://your-artifactory-url/api/build" -T path/to/build.json
+
+{
+  "version": "1.0",
+  "name": "MyApp",
+  "number": "123",
+  "type": "generic",
+  "started": "2023-08-31T10:00:00Z",
+  "modules": [
+    {
+      "id": "com.example:myapp",
+      "artifacts": [
+        {
+          "type": "jar",
+          "sha1": "abc123",
+          "md5": "def456",
+          "name": "myapp.jar"
+        }
+      ],
+      "dependencies": [
+        {
+          "id": "org.springframework:spring-core",
+          "type": "jar",
+          "scopes": ["compile"]
+        }
+      ]
+    }
+  ]
+}
+
+
+
+
+
+
+
+
+----------------
 #!/bin/ksh
 
 # Build Information
