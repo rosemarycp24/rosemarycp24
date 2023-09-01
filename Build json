@@ -1,3 +1,10 @@
+ curl -X PUT " xlink:href="https://artifactory.internal.cba/api/build">https://artifactory.internal.cba/api/build?project=projectKey" -H "Content-Type: application/json" --upload-file build.json
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0curl: (6) Could not resolve host:  xlink:href=https; Name or service not known
+
+
+
 curl -u username:password -X PUT -H "Content-Type: application/json" -T build.json "https://your-artifactory-url/repo/path/to/build-info/build.json"
 
 
