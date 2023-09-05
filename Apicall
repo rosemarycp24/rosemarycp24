@@ -1,0 +1,28 @@
+import requests
+
+# Set your TeamCity server URL and build ID or locator
+teamcity_server = "http://your-teamcity-server"
+build_id_or_locator = "12345"  # Replace with the actual build ID or locator
+
+# Make the API request
+api_url = f"{teamcity_server}/httpAuth/app/rest/builds/{build_id_or_locator}"
+response = requests.get(api_url)
+
+# Check if the request was successful
+if response.status_code == 200:
+    build_details = response.json()
+    
+    # Extract the start time, end time, and duration
+    start_time = build_details['startDate']
+    finish_time = build_details['finishDate']
+    duration_seconds = build_details['duration']
+    
+    # Convert duration to a more human-readable format
+    duration_minutes = duration_seconds // 60
+    duration_seconds %= 60
+    
+    print(f"Build started at: {start_time}")
+    print(f"Build finished at: {finish_time}")
+    print(f"Build duration: {duration_minutes} minutes {duration_seconds} seconds")
+else:
+    print(f"Error: {response.status_code} - Unable to retrieve build details")
