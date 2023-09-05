@@ -1,0 +1,18 @@
+#!/bin/ksh
+
+# Define the file to store timestamps
+timestamps_file="build_timestamps.txt"
+
+# Function to log timestamps
+log_timestamp() {
+    timestamp=$(date -u '+%Y-%m-%dT%H:%M:%S.%3NZ')
+    echo "$1 Time: $timestamp" >> "$timestamps_file"
+}
+
+# Log the start time
+log_timestamp "Start"
+
+# Your build steps go here
+
+# Log the end time
+log_timestamp "End"
