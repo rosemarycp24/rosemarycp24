@@ -16,3 +16,30 @@ log_timestamp "Start"
 
 # Log the end time
 log_timestamp "End"
+
+#!/bin/ksh
+
+# Define the file containing timestamps
+timestamps_file="build_timestamps.txt"
+
+# Function to convert timestamp to milliseconds
+timestamp_to_ms() {
+    timestamp="$1"
+    date -d "$timestamp" '+%s%3N'
+}
+
+# Read start and end timestamps from the file
+start_timestamp=$(grep "Start Time:" "$timestamps_file" | awk '{print $3}')
+end_timestamp=$(grep "End Time:" "$timestamps_file" | awk '{print $3}')
+
+# Convert timestamps to milliseconds
+start_ms=$(timestamp_to_ms "$start_timestamp")
+end_ms=$(timestamp_to_ms "$end_timestamp")
+
+# Calculate duration in milliseconds
+duration_ms=$((end_ms - start_ms))
+
+echo "Duration in milliseconds: $duration_ms ms"
+
+
+
