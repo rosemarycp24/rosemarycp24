@@ -1,0 +1,21 @@
+ksh
+Copy code
+#!/bin/ksh
+
+# Get the Start_date_time and End_date_time values (assumed to be in "YYYYMMDDHHMMSS" format)
+Start_date_time="20230906120000" # Replace with your actual Start_date_time
+End_date_time="20230906120130"   # Replace with your actual End_date_time
+
+# Convert the date and time strings to Unix timestamps (seconds since epoch)
+start_timestamp=$(date -d "$Start_date_time" +%s)
+end_timestamp=$(date -d "$End_date_time" +%s)
+
+# Calculate the duration in seconds
+duration_seconds=$((end_timestamp - start_timestamp))
+
+# Convert the duration to milliseconds
+duration_milliseconds=$((duration_seconds * 1000))
+
+# Print the duration in milliseconds
+echo "Duration in Milliseconds: $duration_milliseconds"
+Replace the Start_date_time and
