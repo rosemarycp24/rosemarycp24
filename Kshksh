@@ -1,0 +1,12 @@
+#!/bin/ksh
+
+# Your JSON file (assuming it's named data.json)
+json_file="data.json"
+
+# Extract the values using awk
+md1=$(awk -F '[:,]' '/"Md1"/{print $2}' "$json_file" | tr -d '" ')
+sha1=$(awk -F '[:,]' '/"Sha1"/{print $2}' "$json_file" | tr -d '" ')
+
+# Print the extracted values
+echo "Md1: $md1"
+echo "Sha1: $sha1"
