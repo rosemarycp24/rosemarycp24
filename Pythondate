@@ -1,0 +1,1 @@
+python -c 'import datetime; current_datetime = datetime.datetime.now(); formatted_date = current_datetime.strftime("%Y-%m-%dT%H:%M:%S.%f%z"); print(formatted_date)'
