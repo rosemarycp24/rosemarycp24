@@ -6,3 +6,7 @@ how to print the timestamp in this format '2014-09-30T12:00:19.893+0300'
 The below command is printing time as 
 python -c 'import datetime; current_datetime = datetime.datetime.now(); formatted_date = current_datetime.strftime("%Y-%m-%dT%H:%M:%S.%f%z"); print(formatted_date)'
 2023-09-18T11:47:53.864644
+
+
+import datetime; print(datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + datetime.datetime.now().strftime("%z"))
+
