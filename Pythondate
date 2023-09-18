@@ -16,4 +16,5 @@ import datetime; print(datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")[
 chowarro-adm@vnl00006521 : /app/AbInitio_sand/sand_users/chowarro-adm/sand/IBM/Rex/Private/rex/run
 >
 
+python -c "import datetime; print((datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + datetime.datetime.now().strftime('%z')).replace(':', ''))"
 
