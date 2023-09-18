@@ -10,4 +10,11 @@ python -c 'import datetime; current_datetime = datetime.datetime.now(); formatte
 python -c "import datetime; print(datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + datetime.datetime.now(datetime.timezone.utc).astimezone().strftime('%z'))"
 
 
+ python -c "import datetime; print(datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + datetime.datetime.now(datetime.timezone.utc).astimezone().strftime('%z'))"
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+AttributeError: 'module' object has no attribute 'timezone'
+
+
+
 
