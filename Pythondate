@@ -7,19 +7,7 @@ The below command is printing time as
 python -c 'import datetime; current_datetime = datetime.datetime.now(); formatted_date = current_datetime.strftime("%Y-%m-%dT%H:%M:%S.%f%z"); print(formatted_date)'
 2023-09-18T11:47:53.864644
 
+python -c "import datetime; print(datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + datetime.datetime.now(datetime.timezone.utc).astimezone().strftime('%z'))"
 
-import datetime; print(datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + datetime.datetime.now().strftime("%z"))
-
-
-> python -c 'import datetime; print(datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + datetime.datetime.now().strftime("%z"))'
-2023-09-18T11:52:15.123
-chowarro-adm@vnl00006521 : /app/AbInitio_sand/sand_users/chowarro-adm/sand/IBM/Rex/Private/rex/run
->
-
-python -c "import datetime; print((datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + datetime.datetime.now().strftime('%z')).replace(':', ''))"
-
- python -c "import datetime; print((datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + datetime.datetime.now().strftime('%z')).replace(':', ''))"
-2023-09-18T115422.771
-chowarro-adm@vnl00006521 : /app/AbInitio_sand/sand_users/chowarro-adm/sand/IBM/Rex/Private/rex/run
 
 
