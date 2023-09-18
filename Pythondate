@@ -18,6 +18,8 @@ AttributeError: 'module' object has no attribute 'timezone'
 python -c "from datetime import datetime; import time; now = datetime.now(); offset = -time.timezone // 60 // 60; print(now.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + f'{offset:+03d}00')"
 
 
+python -c "from datetime import datetime; from pytz import timezone; local_tz = timezone('Australia/Sydney'); print(datetime.now(local_tz).strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + datetime.now(local_tz).strftime('%z'))"
+
 
 
 
