@@ -15,6 +15,9 @@ Traceback (most recent call last):
   File "<string>", line 1, in <module>
 AttributeError: 'module' object has no attribute 'timezone'
 
+python -c "from datetime import datetime; import time; now = datetime.now(); offset = -time.timezone // 60 // 60; print(now.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + f'{offset:+03d}00')"
+
+
 
 
 
