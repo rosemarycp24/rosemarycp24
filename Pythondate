@@ -10,8 +10,4 @@ python -c 'import datetime; current_datetime = datetime.datetime.now(); formatte
 Build start time in the format of yyyy-MM-dd'T'HH:mm:ss.SSSZ
 
 
-
-
-
- python -c "from datetime import datetime; print(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3])"
-2023-09-18T12:02:08.013
+python -c "from datetime import datetime; print(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3]+'+0000')"
