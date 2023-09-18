@@ -22,6 +22,7 @@ python -c "from datetime import datetime; from pytz import timezone; local_tz = 
 
 Build start time in the format of yyyy-MM-dd'T'HH:mm:ss.SSSZ
 
+python -c "from datetime import datetime; print(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3])"
 
 
 
