@@ -15,3 +15,5 @@ python -c "from datetime import datetime; print(datetime.now().strftime('%Y-%m-%
 python -c "from datetime import datetime; from time import localtime, strftime; offset = strftime('%z', localtime()); print(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + offset)"
 
 python -c "from datetime import datetime; from dateutil.tz import gettz; now = datetime.now(); local_time = now.astimezone(gettz('Australia/Sydney')); print(local_time.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + local_time.strftime('%z'))"
+
+python -c "from datetime import datetime; import time; now = datetime.now(); offset = int(time.timezone / -3600) if time.localtime().tm_isdst == 0 else int(time.altzone / -3600); print(now.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + f'{offset:+03d}00')"
