@@ -20,6 +20,8 @@ python -c "from datetime import datetime; import time; now = datetime.now(); off
 
 python -c "from datetime import datetime; from pytz import timezone; local_tz = timezone('Australia/Sydney'); print(datetime.now(local_tz).strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + datetime.now(local_tz).strftime('%z'))"
 
+Build start time in the format of yyyy-MM-dd'T'HH:mm:ss.SSSZ
+
 
 
 
