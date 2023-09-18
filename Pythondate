@@ -19,3 +19,10 @@ python -c "from datetime import datetime; from dateutil.tz import gettz; now = d
 python -c "from datetime import datetime; import time; now = datetime.now(); offset = int(time.timezone / -3600) if time.localtime().tm_isdst == 0 else int(time.altzone / -3600); print(now.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + f'{offset:+03d}00')"
 
 python -c "from datetime import datetime; import time; now = datetime.now(); offset_minutes = -time.timezone//60; if time.localtime().tm_isdst: offset_minutes = offset_minutes - 60; offset = f'{offset_minutes//60:03d}{offset_minutes%60:02d}'; print(now.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + offset)"
+
+build_start_time_python=$(python -c "from datetime import datetime; print(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3]+'+0000')")
+  export $build_start_time_python
+  echo "The build start time is $build_start_time_python"
+
+export: 2023-09-18T12:22:23.484+0000: is not an identifier
+
