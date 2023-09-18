@@ -5,24 +5,13 @@ python -c "import datetime; print(datetime.datetime.now().strftime('%Y-%m-%dT%H:
 how to print the timestamp in this format '2014-09-30T12:00:19.893+0300'
 The below command is printing time as 
 python -c 'import datetime; current_datetime = datetime.datetime.now(); formatted_date = current_datetime.strftime("%Y-%m-%dT%H:%M:%S.%f%z"); print(formatted_date)'
-2023-09-18T11:47:53.864644
-
-python -c "import datetime; print(datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + datetime.datetime.now(datetime.timezone.utc).astimezone().strftime('%z'))"
-
-
- python -c "import datetime; print(datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + datetime.datetime.now(datetime.timezone.utc).astimezone().strftime('%z'))"
-Traceback (most recent call last):
-  File "<string>", line 1, in <module>
-AttributeError: 'module' object has no attribute 'timezone'
-
-python -c "from datetime import datetime; import time; now = datetime.now(); offset = -time.timezone // 60 // 60; print(now.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + f'{offset:+03d}00')"
-
-
-python -c "from datetime import datetime; from pytz import timezone; local_tz = timezone('Australia/Sydney'); print(datetime.now(local_tz).strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + datetime.now(local_tz).strftime('%z'))"
+2023-09-18T11:47:53.86464
 
 Build start time in the format of yyyy-MM-dd'T'HH:mm:ss.SSSZ
 
-python -c "from datetime import datetime; print(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3])"
 
 
 
+
+ python -c "from datetime import datetime; print(datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3])"
+2023-09-18T12:02:08.013
