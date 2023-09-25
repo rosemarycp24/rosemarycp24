@@ -1,22 +1,25 @@
-CurrentBuild: builds/2023/07_2023
+---
+Build:
+    abinitio
+        EMEProjectsList:
+        - /Projects/CBA/IBM/Rex/Private/rex_limits
+        - /Projects/CBA/IBM/Rex/Private/rex
+        - /Projects/CBA/IBM/Rex/Public/REX_DQ
+        - /Projects/CBA/IBM/Rex/Public/REX_SCHEDULE
+    database
+        DatabaseScripts:
+        - https://github.source.internal.cba/TradedProducts/REx_Oracle/blob/release-rex-2023/Deploy/releases/2023/07_2023/frtb_rex_app_db_objects.sql
+        - https://github.source.internal.cba/TradedProducts/REx_Oracle/blob/release-rex-2023/Deploy/releases/2023/07_2023/02_frtb_rex_app_db_objects.sql
 Deploy:
-  - Name: abinitio
-    EMEProjectsList:
-      - /Projects/CBA/IBM/Rex/Private/rex_limits
-      - /Projects/CBA/IBM/Rex/Private/rex
-      - /Projects/CBA/IBM/Rex/Public/REX_DQ
-      - /Projects/CBA/IBM/Rex/Public/REX_SCHEDULE
-    JobDefinitonsList:
+    CCJobList:
       - cc/rex_2_0/process_eod_stress/jobdefs/Process_MX_MRE_Job_-_PnLVector_MACRO_Stress_Testing_rex2-mre-process-pnlvector-macro-stress-testing-1.jobdef
       - cc/rex_2_0/process_eod_stress/jobdefs/testjobdef.jobdef
     WebServiceCommandList:
       - testwebservice.1
       - testwebservice.1
-  - Name: database
-    DatabaseScripts:
-      - https://github.source.internal.cba/TradedProducts/REx_Oracle/blob/release-rex-2023/Deploy/releases/2023/07_2023/frtb_rex_app_db_objects.sql
-      - https://github.source.internal.cba/TradedProducts/REx_Oracle/blob/release-rex-2023/Deploy/releases/2023/07_2023/02_frtb_rex_app_db_objects.sql
+    AbinitoCommandList:
+      - sandbodlist
 Rollback:
-  - Name: database
+    database
     DatabaseScripts:
       - https://github.source.internal.cba/TradedProducts/REx_Oracle/blob/release-rex-2023/Deploy/releases/2023/07_2023/rolback_frtb_rex_app_db_objects.sql
