@@ -1,0 +1,21 @@
+#!/usr/bin/env python
+
+import yaml
+import sys
+
+# Define the path to the YAML file on the remote server
+remote_yaml_file = '/path/to/remote/projects.yaml'
+
+# Read and parse the YAML file
+with open(remote_yaml_file, 'r') as stream:
+    yaml_data = yaml.safe_load(stream)
+
+# Extract the URLs under Build.database.DatabaseScripts
+if 'Build' in yaml_data and 'database' in yaml_data['Build'] and 'DatabaseScripts' in yaml_data['Build']['database']:
+    urls = yaml_data['Build']['database']['DatabaseScripts']
+    for url in urls:
+        print(url)
+else:
+    print("No URLs found under Build.database.DatabaseScripts")
+
+# Example usage: python fetch_urls.py > output.txt
