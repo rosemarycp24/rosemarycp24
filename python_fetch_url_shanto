@@ -1,0 +1,35 @@
+# Function to parse YAML-like file
+def parse_yaml(file_path):
+    output_dict = {}
+    stack = []
+    with open(file_path, 'r') as file:
+        for line in file:
+            indent = len(line) - len(line.lstrip(' '))
+            key_value = line.strip().split(':')
+            while len(stack) > indent:
+                stack.pop()
+            item = {key_value[0]: []} if len(key_value) == 1 else key_value[0]
+            if stack:
+                stack[-1][1].append(item)
+            else:
+                output_dict[item] = []
+            if len(key_value) == 1:
+                stack.append((key_value[0], output_dict[key_value[0]] if not stack else item[key_value[0]]))
+
+    return output_dict
+
+# Parse the file
+data = parse_yaml('your_file.yaml')
+
+# Write lists to text files
+def write_list_to_file(file_name, data_list):
+    with open(file_name, 'w') as f:
+        for item in data_list:
+            f.write(f"{item}\n")
+
+write_list_to_file('Deploy-EMEProjectsList.txt', data['Build']['abinitio']['EMEProjectsList'])
+write_list_to_file('Deploy-DatabaseScripts.txt', data['Build']['database']['DatabaseScripts'])
+write_list_to_file('Deploy-CCJobList.txt', data['Deploy']['CCJobList'])
+write_list_to_file('Deploy-WebServiceCommandList.txt', data['Deploy']['WebServiceCommandList'])
+write_list_to_file('Deploy-AbinitoCommandList.txt', data['Deploy']['AbinitoCommandList'])
+write_list_to_file('Rollback-DatabaseScripts.txt', data['Rollback']['database']['DatabaseScripts'])
