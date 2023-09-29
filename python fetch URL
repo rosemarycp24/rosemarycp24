@@ -34,6 +34,12 @@ if build_section:
     if abinitio_data:
         eme_projects_list = abinitio_data.get('EMEProjectsList', [])
 
+# Extract CCJobList from the Deploy section
+cc_job_list = []
+deploy_section = yaml_data.get('Deploy', {})
+if deploy_section:
+    cc_job_list = deploy_section.get('CCJobList', [])
+
 
 # Print the extracted URLs
 print("Build URLs:")
@@ -49,4 +55,8 @@ print("EMEProjectsList:")
 for item in eme_projects_list:
     print(item)
 
+# Print the extracted CCJobList
+print("CCJobList:")
+for item in cc_job_list:
+    print(item)
 
