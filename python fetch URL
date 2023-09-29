@@ -26,6 +26,15 @@ if rollback_section:
             if isinstance(item, str) and item.startswith('http'):
                 rollback_urls.append(item)
 
+# Extract EMEProjectsList from the Build section
+eme_projects_list = []
+build_section = yaml_data.get('Build', {})
+if build_section:
+    abinitio_data = build_section.get('abinitio', {})
+    if abinitio_data:
+        eme_projects_list = abinitio_data.get('EMEProjectsList', [])
+
+
 # Print the extracted URLs
 print("Build URLs:")
 for url in build_urls:
@@ -34,5 +43,10 @@ for url in build_urls:
 print("\nRollback URLs:")
 for url in rollback_urls:
     print(url)
+
+# Print the extracted EMEProjectsList
+print("EMEProjectsList:")
+for item in eme_projects_list:
+    print(item)
 
 
