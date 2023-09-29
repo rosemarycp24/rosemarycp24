@@ -19,3 +19,40 @@ else:
     print("No URLs found under Build.database.DatabaseScripts")
 
 # Example usage: python fetch_urls.py > output.txt
+
+
+
+
+
+
+#!/usr/bin/env python
+
+import yaml
+import sys
+import os
+
+# Define the path to the YAML file on the remote server
+remote_yaml_file = '/path/to/remote/projects.yaml'
+
+# Read and parse the YAML file
+with open(remote_yaml_file, 'r') as stream:
+    yaml_data = yaml.safe_load(stream)
+
+# Define output directory
+output_dir = '/path/to/local/output_directory'
+os.makedirs(output_dir, exist_ok=True)
+
+# Function to write data to an output file
+def write_output_file(data, filename):
+    with open(os.path.join(output_dir, filename), 'w') as output_file:
+        output_file.write(data)
+
+# Iterate through YAML sections and write them to separate output files
+for section, data in yaml_data.items():
+    if isinstance(data, dict):
+        # Convert the data back to YAML format
+        section_yaml = yaml.dump({section: data}, default_flow_style=False)
+        output_filename = f"{section.lower()}.yaml"
+        write_output_file(section_yaml, output_filename)
+
+print("YAML sections have been written to separate output files.")
