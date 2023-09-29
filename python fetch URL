@@ -5,14 +5,14 @@ import sys
 import os
 
 # Define the path to the YAML file on the remote server
-remote_yaml_file = '/path/to/remote/projects.yaml'
+remote_yaml_file = '/home/chowarro-adm/parse_yaml'
 
 # Read and parse the YAML file
 with open(remote_yaml_file, 'r') as stream:
     yaml_data = yaml.safe_load(stream)
 
 # Define output directory
-output_dir = '/path/to/local/output_directory'
+output_dir = '/home/chowarro-adm/parse_yaml'
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
