@@ -42,7 +42,7 @@ write_list_to_file('Deploy-AbinitoCommandList.txt', data['Deploy']['AbinitoComma
 write_list_to_file('Rollback-DatabaseScripts.txt', data['Rollback']['database']['DatabaseScripts'])
 
 
- python parse_yaml_file3.py
+{'- https': '//github.source.internal.cba/TradedProducts/REx_Oracle/blob/release-rex-2023/Deploy/releases/2023/07_2023/rolback_frtb_rex_app_db_objects.sql', 'Rollback': '', 'EMEProjectsList': '', 'CCJobList': '', 'Deploy': '', 'database': '', '- cc/rex_2_0/process_eod_stress/jobdefs/Process_MX_MRE_Job_-_PnLVector_MACRO_Stress_Testing_rex2-mre-process-pnlvector-macro-stress-testing-1.jobdef': {'- cc/rex_2_0/process_eod_stress/jobdefs/testjobdef.jobdef': {'- testwebservice.1': {'- testwebservice.1': {}}, 'AbinitoCommandList': '', '- sandbodlist': {}, 'WebServiceCommandList': ''}}, '- /Projects/CBA/IBM/Rex/Private/rex_limits': {'- /Projects/CBA/IBM/Rex/Private/rex': {'- https': '//github.source.internal.cba/TradedProducts/REx_Oracle/blob/release-rex-2023/Deploy/releases/2023/07_2023/02_frtb_rex_app_db_objects.sql', '- /Projects/CBA/IBM/Rex/Public/REX_DQ': {'- /Projects/CBA/IBM/Rex/Public/REX_SCHEDULE': {}}, 'DatabaseScripts': '', 'database': ''}}, 'Build': '', 'abinitio': '', 'DatabaseScripts': ''}
 Traceback (most recent call last):
   File "parse_yaml_file3.py", line 37, in <module>
     write_list_to_file('Deploy-EMEProjectsList.txt', data['Build']['abinitio']['EMEProjectsList'])
