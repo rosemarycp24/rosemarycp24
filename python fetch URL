@@ -4,14 +4,14 @@ import yaml
 import os
 
 # Define the path to the YAML file on the remote server
-remote_yaml_file = '/path/to/remote/projects.yaml'
+remote_yaml_file = '/home/chowarro-adm/release.yaml'
 
 # Read and parse the YAML file
 with open(remote_yaml_file, 'r') as stream:
     yaml_data = yaml.safe_load(stream)
 
 # Define output directory
-output_dir = '/path/to/local/output_directory'
+output_dir = '/home/chowarro-adm/parse_yaml'
 os.makedirs(output_dir, exist_ok=True)
 
 # Iterate through YAML sections and write them to separate output files
