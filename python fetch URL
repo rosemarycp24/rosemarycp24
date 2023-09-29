@@ -23,10 +23,17 @@ def write_output_file(data, filename):
 
 # Iterate through YAML sections and write them to separate output files
 for section, data in yaml_data.items():
-    if isinstance(data, dict):
-        # Convert the data back to YAML format
-        section_yaml = yaml.dump({section: data}, default_flow_style=False)
-        output_filename = "{}.yaml".format(section.lower())
-        write_output_file(section_yaml, output_filename)
+    if isinstance(data, list):
+        # Convert the list to a newline-separated string
+        section_data = '\n'.join(data)
+        # Remove leading/trailing whitespace
+        section_data = section_data.strip()
+        # Define the output filename based on the section name
+        output_filename = f"{section.split('-')[0]}-{section.split('-')[1]}.txt"
+        write_output_file(section_data, output_filename)
+    elif data is None:
+        # If there is no data in the section, create a zero-byte file
+        output_filename = f"{section.split('-')[0]}-{section.split('-')[1]}.txt"
+        open(os.path.join(output_dir, output_filename), 'w').close()
 
-print("YAML sections have been written to separate output files.")
+print("Output files have been created with the requested data or as zero-byte files.")
