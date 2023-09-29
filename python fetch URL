@@ -6,9 +6,9 @@ with open('your_file.yaml', 'r') as yaml_file:
 
 # Extract URLs from the Build section
 build_urls = []
-abinitio_data = yaml_data.get('Build', {}).get('abinitio', {})
+abinitio_data = yaml_data.get('Build', {})
 if abinitio_data:
-    eme_projects_list = abinitio_data.get('EMEProjectsList', [])
+    eme_projects_list = abinitio_data.get('abinitio', {}).get('EMEProjectsList', [])
     for item in eme_projects_list:
         if isinstance(item, str) and item.startswith('http'):
             build_urls.append(item)
