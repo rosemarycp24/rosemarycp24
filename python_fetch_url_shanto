@@ -1,6 +1,7 @@
 # Function to parse YAML-like file
 def parse_yaml(file_path):
     output_dict = {}
+    current_dict = output_dict
     stack = []
     with open(file_path, 'r') as file:
         for line in file:
@@ -8,13 +9,18 @@ def parse_yaml(file_path):
             key_value = line.strip().split(':')
             while len(stack) > indent:
                 stack.pop()
-            item = {key_value[0]: []} if len(key_value) == 1 else key_value[0]
-            if stack:
-                stack[-1][1].append(item)
-            else:
-                output_dict[item] = []
-            if len(key_value) == 1:
-                stack.append((key_value[0], output_dict[key_value[0]] if not stack else item[key_value[0]]))
+                current_dict = output_dict
+                for item in stack:
+                    current_dict = current_dict[item]
+            key = key_value[0]
+            if len(key_value) == 1:  # If it's a dictionary
+                if key not in current_dict:
+                    current_dict[key] = {}
+                stack.append(key)
+                current_dict = current_dict[key]
+            else:  # It's a leaf item
+                value = key_value[1].strip()
+                current_dict[key] = value  # Assign the value to the key in the current dictionary
 
     return output_dict
 
@@ -27,17 +33,10 @@ def write_list_to_file(file_name, data_list):
         for item in data_list:
             f.write("{}\n".format(item))
 
+# Sample usage, make sure the keys exist in the parsed data
 write_list_to_file('Deploy-EMEProjectsList.txt', data['Build']['abinitio']['EMEProjectsList'])
 write_list_to_file('Deploy-DatabaseScripts.txt', data['Build']['database']['DatabaseScripts'])
 write_list_to_file('Deploy-CCJobList.txt', data['Deploy']['CCJobList'])
 write_list_to_file('Deploy-WebServiceCommandList.txt', data['Deploy']['WebServiceCommandList'])
 write_list_to_file('Deploy-AbinitoCommandList.txt', data['Deploy']['AbinitoCommandList'])
 write_list_to_file('Rollback-DatabaseScripts.txt', data['Rollback']['database']['DatabaseScripts'])
-
-
-Traceback (most recent call last):
-  File "parse_yaml_file3.py", line 22, in <module>
-    data = parse_yaml('/home/chowarro-adm/release.yaml')
-  File "parse_yaml_file3.py", line 15, in parse_yaml
-    output_dict[item] = []
-TypeError: unhashable type: 'dict'
