@@ -1,1 +1,6 @@
 ssh_command="grep -oP '/Projects/CBA/IBM/Rex/(Private|Public)/\K.*' $remote_yaml_file"
+
+
+# SSH command to extract the full paths
+ssh_command="grep -oP '(?<=- ).*' $remote_yaml_file | grep -E '/Projects/CBA/IBM/Rex/(Private|Public)/'"
+
