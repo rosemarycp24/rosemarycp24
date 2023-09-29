@@ -4,18 +4,25 @@ import yaml
 with open('/home/chowarro-adm/release.yaml', 'r') as yaml_file:
     yaml_data = yaml.safe_load(yaml_file)
 
-# Extract database_scripts from the Build section
+# Extract and write Build URLs to a file
 build_urls = []
 build_section = yaml_data.get('Build', {})
 if build_section:
-    database_data = build_section.get('database', {})
-    if database_data:
-        database_scripts = database_data.get('DatabaseScripts', [])
-        for item in database_scripts:
+    abinitio_data = build_section.get('abinitio', {})
+    if abinitio_data:
+        eme_projects_list = abinitio_data.get('EMEProjectsList', [])
+        for item in eme_projects_list:
             if isinstance(item, str) and item.startswith('http'):
                 build_urls.append(item)
 
-# Extract database_scripts from the Rollback section
+build_output_file_path = '/home/chowarro-adm/build_urls.txt'
+with open(build_output_file_path, 'w') as build_output_file:
+    for url in build_urls:
+        build_output_file.write(url + '\n')
+
+print(f"Build URLs have been written to {build_output_file_path}")
+
+# Extract and write Rollback URLs to a file
 rollback_urls = []
 rollback_section = yaml_data.get('Rollback', {})
 if rollback_section:
@@ -26,37 +33,22 @@ if rollback_section:
             if isinstance(item, str) and item.startswith('http'):
                 rollback_urls.append(item)
 
-# Extract EMEProjectsList from the Build section
-eme_projects_list = []
-build_section = yaml_data.get('Build', {})
-if build_section:
-    abinitio_data = build_section.get('abinitio', {})
-    if abinitio_data:
-        eme_projects_list = abinitio_data.get('EMEProjectsList', [])
+rollback_output_file_path = '/home/chowarro-adm/rollback_urls.txt'
+with open(rollback_output_file_path, 'w') as rollback_output_file:
+    for url in rollback_urls:
+        rollback_output_file.write(url + '\n')
 
-# Extract CCJobList from the Deploy section
+print(f"Rollback URLs have been written to {rollback_output_file_path}")
+
+# Extract and write CCJobList to a file
 cc_job_list = []
 deploy_section = yaml_data.get('Deploy', {})
 if deploy_section:
     cc_job_list = deploy_section.get('CCJobList', [])
 
+cc_job_list_output_file_path = '/home/chowarro-adm/cc_job_list.txt'
+with open(cc_job_list_output_file_path, 'w') as cc_job_list_output_file:
+    for item in cc_job_list:
+        cc_job_list_output_file.write(item + '\n')
 
-# Print the extracted URLs
-print("Build URLs:")
-for url in build_urls:
-    print(url)
-
-print("\nRollback URLs:")
-for url in rollback_urls:
-    print(url)
-
-# Print the extracted EMEProjectsList
-print("EMEProjectsList:")
-for item in eme_projects_list:
-    print(item)
-
-# Print the extracted CCJobList
-print("CCJobList:")
-for item in cc_job_list:
-    print(item)
-
+print(f"CCJobList has been written to {cc_job_list_output_file_path}")
