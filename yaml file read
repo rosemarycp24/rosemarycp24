@@ -9,3 +9,8 @@ ssh_command="yq e '.Build.database.DatabaseScripts[]' $remote_yaml_file"
 # SSH command to extract the details under Build.database.DatabaseScripts
 ssh_command="sed -n '/Build:/,/DatabaseScripts:/p' $remote_yaml_file | grep -E '^\s+- ' | sed 's/^\s*- //'"
 
+
+
+# SSH command to extract all URLs under Build.database.DatabaseScripts
+ssh_command="sed -n '/Build:/,/DatabaseScripts:/p' $remote_yaml_file | grep -o 'https://[^[:space:]]*'"
+
