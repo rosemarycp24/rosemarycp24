@@ -1,0 +1,1 @@
+ssh_command="grep -oP '/Projects/CBA/IBM/Rex/(Private|Public)/\K.*' $remote_yaml_file"
