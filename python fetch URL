@@ -1,21 +1,21 @@
 import yaml
 
 # Load the YAML data from your file
-with open('your_file.yaml', 'r') as yaml_file:
+with open('/home/chowarro-adm/release.yaml', 'r') as yaml_file:
     yaml_data = yaml.safe_load(yaml_file)
 
-# Extract URLs from the Build section
+# Extract database_scripts from the Build section
 build_urls = []
 build_section = yaml_data.get('Build', {})
 if build_section:
-    abinitio_data = build_section.get('abinitio', {})
-    if abinitio_data:
-        eme_projects_list = abinitio_data.get('EMEProjectsList', [])
-        for item in eme_projects_list:
+    database_data = build_section.get('database', {})
+    if database_data:
+        database_scripts = database_data.get('DatabaseScripts', [])
+        for item in database_scripts:
             if isinstance(item, str) and item.startswith('http'):
                 build_urls.append(item)
 
-# Extract URLs from the Rollback section
+# Extract database_scripts from the Rollback section
 rollback_urls = []
 rollback_section = yaml_data.get('Rollback', {})
 if rollback_section:
@@ -34,3 +34,5 @@ for url in build_urls:
 print("\nRollback URLs:")
 for url in rollback_urls:
     print(url)
+
+
