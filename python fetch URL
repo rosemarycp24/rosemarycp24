@@ -6,21 +6,25 @@ with open('your_file.yaml', 'r') as yaml_file:
 
 # Extract URLs from the Build section
 build_urls = []
-abinitio_data = yaml_data.get('Build', {})
-if abinitio_data:
-    eme_projects_list = abinitio_data.get('abinitio', {}).get('EMEProjectsList', [])
-    for item in eme_projects_list:
-        if isinstance(item, str) and item.startswith('http'):
-            build_urls.append(item)
+build_section = yaml_data.get('Build', {})
+if build_section:
+    abinitio_data = build_section.get('abinitio', {})
+    if abinitio_data:
+        eme_projects_list = abinitio_data.get('EMEProjectsList', [])
+        for item in eme_projects_list:
+            if isinstance(item, str) and item.startswith('http'):
+                build_urls.append(item)
 
 # Extract URLs from the Rollback section
 rollback_urls = []
-rollback_data = yaml_data.get('Rollback', {}).get('database', {})
-if rollback_data:
-    database_scripts = rollback_data.get('DatabaseScripts', [])
-    for item in database_scripts:
-        if isinstance(item, str) and item.startswith('http'):
-            rollback_urls.append(item)
+rollback_section = yaml_data.get('Rollback', {})
+if rollback_section:
+    database_data = rollback_section.get('database', {})
+    if database_data:
+        database_scripts = database_data.get('DatabaseScripts', [])
+        for item in database_scripts:
+            if isinstance(item, str) and item.startswith('http'):
+                rollback_urls.append(item)
 
 # Print the extracted URLs
 print("Build URLs:")
