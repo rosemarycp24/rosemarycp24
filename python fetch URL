@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import yaml
-import sys
 import os
 
 # Define the path to the YAML file on the remote server
@@ -13,36 +12,18 @@ with open(remote_yaml_file, 'r') as stream:
 
 # Define output directory
 output_dir = '/path/to/local/output_directory'
-if not os.path.exists(output_dir):
-    os.makedirs(output_dir)
-
-# Function to write data to an output file
-def write_output_file(data, filename):
-    with open(os.path.join(output_dir, filename), 'w') as output_file:
-        output_file.write(data)
+os.makedirs(output_dir, exist_ok=True)
 
 # Iterate through YAML sections and write them to separate output files
 for section, data in yaml_data.items():
+    output_filename = os.path.join(output_dir, f"{section}.txt")
+    
     if isinstance(data, list):
-        # Convert the list to a newline-separated string
-        section_data = '\n'.join(data)
-        # Remove leading/trailing whitespace
-        section_data = section_data.strip()
-        # Define the output filename based on the section name
-        section_name_parts = section.split('-')
-        if len(section_name_parts) == 2:
-            output_filename = "{}-{}.txt".format(section_name_parts[0], section_name_parts[1])
-            write_output_file(section_data, output_filename)
-        else:
-            print("Skipping invalid section name: " + section)
-
+        with open(output_filename, 'w') as output_file:
+            for item in data:
+                output_file.write("%s\n" % item)
     elif data is None:
-        # If there is no data in the section, create a zero-byte file
-        section_name_parts = section.split('-')
-        if len(section_name_parts) == 2:
-            output_filename = "{}-{}.txt".format(section_name_parts[0], section_name_parts[1])
-            open(os.path.join(output_dir, output_filename), 'w').close()
-        else:
-            print("Skipping invalid section name: " + section)
+        # Create a zero-byte file for sections with no data
+        open(output_filename, 'w').close()
 
 print("Output files have been created with the requested data or as zero-byte files.")
