@@ -2,33 +2,6 @@
 
 import yaml
 import sys
-
-# Define the path to the YAML file on the remote server
-remote_yaml_file = '/path/to/remote/projects.yaml'
-
-# Read and parse the YAML file
-with open(remote_yaml_file, 'r') as stream:
-    yaml_data = yaml.safe_load(stream)
-
-# Extract the URLs under Build.database.DatabaseScripts
-if 'Build' in yaml_data and 'database' in yaml_data['Build'] and 'DatabaseScripts' in yaml_data['Build']['database']:
-    urls = yaml_data['Build']['database']['DatabaseScripts']
-    for url in urls:
-        print(url)
-else:
-    print("No URLs found under Build.database.DatabaseScripts")
-
-# Example usage: python fetch_urls.py > output.txt
-
-
-
-
-
-
-#!/usr/bin/env python
-
-import yaml
-import sys
 import os
 
 # Define the path to the YAML file on the remote server
@@ -40,7 +13,8 @@ with open(remote_yaml_file, 'r') as stream:
 
 # Define output directory
 output_dir = '/path/to/local/output_directory'
-os.makedirs(output_dir, exist_ok=True)
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
 
 # Function to write data to an output file
 def write_output_file(data, filename):
@@ -52,7 +26,7 @@ for section, data in yaml_data.items():
     if isinstance(data, dict):
         # Convert the data back to YAML format
         section_yaml = yaml.dump({section: data}, default_flow_style=False)
-        output_filename = f"{section.lower()}.yaml"
+        output_filename = "{}.yaml".format(section.lower())
         write_output_file(section_yaml, output_filename)
 
 print("YAML sections have been written to separate output files.")
