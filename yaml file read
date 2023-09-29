@@ -6,6 +6,6 @@ ssh_command="grep -oP '(?<=- ).*' $remote_yaml_file | grep -E '/Projects/CBA/IBM
 
 ssh_command="yq e '.Build.database.DatabaseScripts[]' $remote_yaml_file"
 
-
 # SSH command to extract the details under Build.database.DatabaseScripts
-ssh_command="grep -A1 'Build:' $remote_yaml_file | grep -E '^\s+- ' | sed 's/^\s*- //'"
+ssh_command="sed -n '/Build:/,/DatabaseScripts:/p' $remote_yaml_file | grep -E '^\s+- ' | sed 's/^\s*- //'"
+
