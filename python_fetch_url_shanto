@@ -40,3 +40,11 @@ write_list_to_file('Deploy-CCJobList.txt', data['Deploy']['CCJobList'])
 write_list_to_file('Deploy-WebServiceCommandList.txt', data['Deploy']['WebServiceCommandList'])
 write_list_to_file('Deploy-AbinitoCommandList.txt', data['Deploy']['AbinitoCommandList'])
 write_list_to_file('Rollback-DatabaseScripts.txt', data['Rollback']['database']['DatabaseScripts'])
+
+
+ python parse_yaml_file3.py
+Traceback (most recent call last):
+  File "parse_yaml_file3.py", line 37, in <module>
+    write_list_to_file('Deploy-EMEProjectsList.txt', data['Build']['abinitio']['EMEProjectsList'])
+TypeError: string indices must be integers, not str
+
