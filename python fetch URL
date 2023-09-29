@@ -6,17 +6,17 @@ import os
 # Define the path to the YAML file on the remote server
 remote_yaml_file = '/home/chowarro-adm/release.yaml'
 
+# Define the output directory
+output_dir = '/home/chowarro-adm/parse_yaml'
+os.makedirs(output_dir, exist_ok=True)
+
 # Read and parse the YAML file
 with open(remote_yaml_file, 'r') as stream:
     yaml_data = yaml.safe_load(stream)
 
-# Define output directory
-output_dir = '/home/chowarro-adm/parse_yaml'
-os.makedirs(output_dir, exist_ok=True)
-
 # Iterate through YAML sections and write them to separate output files
 for section, data in yaml_data.items():
-    output_filename = os.path.join(output_dir, f"{section}.txt")
+    output_filename = os.path.join(output_dir, "{}.txt".format(section))
     
     if isinstance(data, list):
         with open(output_filename, 'w') as output_file:
