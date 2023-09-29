@@ -31,18 +31,18 @@ for section, data in yaml_data.items():
         # Define the output filename based on the section name
         section_name_parts = section.split('-')
         if len(section_name_parts) == 2:
-            output_filename = section_name_parts[0] + '-' + section_name_parts[1] + '.txt'
+            output_filename = "{}-{}.txt".format(section_name_parts[0], section_name_parts[1])
             write_output_file(section_data, output_filename)
         else:
-            print(f"Skipping invalid section name: {section}")
+            print("Skipping invalid section name: " + section)
 
     elif data is None:
         # If there is no data in the section, create a zero-byte file
         section_name_parts = section.split('-')
         if len(section_name_parts) == 2:
-            output_filename = section_name_parts[0] + '-' + section_name_parts[1] + '.txt'
+            output_filename = "{}-{}.txt".format(section_name_parts[0], section_name_parts[1])
             open(os.path.join(output_dir, output_filename), 'w').close()
         else:
-            print(f"Skipping invalid section name: {section}")
+            print("Skipping invalid section name: " + section)
 
 print("Output files have been created with the requested data or as zero-byte files.")
