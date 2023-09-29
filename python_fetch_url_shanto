@@ -19,7 +19,7 @@ def parse_yaml(file_path):
     return output_dict
 
 # Parse the file
-data = parse_yaml('your_file.yaml')
+data = parse_yaml('/home/chowarro-adm/release.yaml')
 
 # Write lists to text files
 def write_list_to_file(file_name, data_list):
@@ -33,3 +33,11 @@ write_list_to_file('Deploy-CCJobList.txt', data['Deploy']['CCJobList'])
 write_list_to_file('Deploy-WebServiceCommandList.txt', data['Deploy']['WebServiceCommandList'])
 write_list_to_file('Deploy-AbinitoCommandList.txt', data['Deploy']['AbinitoCommandList'])
 write_list_to_file('Rollback-DatabaseScripts.txt', data['Rollback']['database']['DatabaseScripts'])
+
+*******************************************************
+ python parse_yaml_file3.py
+  File "parse_yaml_file3.py", line 28
+    f.write(f"{item}\n")
+                      ^
+SyntaxError: invalid syntax
+
