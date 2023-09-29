@@ -6,15 +6,21 @@ with open('your_file.yaml', 'r') as yaml_file:
 
 # Extract URLs from the Build section
 build_urls = []
-for item in yaml_data.get('Build', {}).get('abinitio', {}).get('EMEProjectsList', []):
-    if item.startswith('http'):
-        build_urls.append(item)
+abinitio_data = yaml_data.get('Build', {}).get('abinitio', {})
+if abinitio_data:
+    eme_projects_list = abinitio_data.get('EMEProjectsList', [])
+    for item in eme_projects_list:
+        if isinstance(item, str) and item.startswith('http'):
+            build_urls.append(item)
 
 # Extract URLs from the Rollback section
 rollback_urls = []
-for item in yaml_data.get('Rollback', {}).get('database', {}).get('DatabaseScripts', []):
-    if item.startswith('http'):
-        rollback_urls.append(item)
+rollback_data = yaml_data.get('Rollback', {}).get('database', {})
+if rollback_data:
+    database_scripts = rollback_data.get('DatabaseScripts', [])
+    for item in database_scripts:
+        if isinstance(item, str) and item.startswith('http'):
+            rollback_urls.append(item)
 
 # Print the extracted URLs
 print("Build URLs:")
