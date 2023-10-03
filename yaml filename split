@@ -1,1 +1,11 @@
 right a unix ksh cmmand to accpt this string builds/2023/09_2023_release.yaml as input and print the output as builds/2023/09_2023
+
+
+#!/usr/bin/ksh
+
+input_string="$1"
+
+# Using sed to remove the "_release.yaml" part
+output_string=$(echo "$input_string" | sed 's/_release.yaml//')
+
+echo "${output_string}"
