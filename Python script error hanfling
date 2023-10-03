@@ -1,0 +1,28 @@
+import yaml
+
+# Function to parse YAML file using PyYAML
+def parse_yaml(file_path):
+    with open(file_path, 'r') as file:
+        return yaml.safe_load(file)
+
+# Parse the file
+data = parse_yaml('/home/chowarro-adm/release.yaml')
+print(data)  # Add this line to print the parsed data
+
+# Write lists to text files
+def write_list_to_file(file_name, data_list):
+    # Check if data_list is None or not
+    if data_list is None:
+        print(f"Warning: No data to write to {file_name}")
+        data_list = []
+    with open(file_name, 'w') as f:
+        for item in data_list:
+            f.write("{}\n".format(item))
+
+# Sample usage, make sure the keys exist in the parsed data
+write_list_to_file('Deploy-EMEProjectsList.txt', data.get('Build', {}).get('abinitio', {}).get('EMEProjectsList'))
+write_list_to_file('Deploy-DatabaseScripts.txt', data.get('Build', {}).get('database', {}).get('DatabaseScripts'))
+write_list_to_file('Deploy-CCJobList.txt', data.get('Deploy', {}).get('CCJobList'))
+write_list_to_file('Deploy-WebServiceCommandList.txt', data.get('Deploy', {}).get('WebServiceCommandList'))
+write_list_to_file('Deploy-AbinitoCommandList.txt', data.get('Deploy', {}).get('AbinitoCommandList'))
+write_list_to_file('Rollback-DatabaseScripts.txt', data.get('Rollback', {}).get('database', {}).get('DatabaseScripts'))
