@@ -1,0 +1,14 @@
+SELECT 
+    SUBSTR(column_name, 
+           INSTR(column_name, 'clm3:') + 6, 
+           CASE 
+               WHEN INSTR(column_name, ',', INSTR(column_name, 'clm3:')) > 0 THEN 
+                   INSTR(column_name, ',', INSTR(column_name, 'clm3:')) - INSTR(column_name, 'clm3:') - 6
+               ELSE 
+                   LENGTH(column_name) - INSTR(column_name, 'clm3:') - 5
+           END
+    ) AS extracted_value
+FROM 
+    your_table_name
+WHERE 
+    INSTR(column_name, 'clm3:') > 0;
