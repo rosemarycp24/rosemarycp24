@@ -18,3 +18,26 @@ echo "        ROLLBACK;" >> ${script_file}
 echo "END;" >> ${script_file}
 echo "/" >> ${script_file}
 echo "EXIT;" >> ${script_file}
+-------------------------------------------------------
+
+
+# Check if the oracle_log_content file is empty or not
+if [ -s "${oracle_log_content}" ]; then
+    echo "    v_oracle_log_content := q'{${oracle_log_content}}';" >> ${script_file}
+else
+    echo "    v_oracle_log_content := 'NA';" >> ${script_file}
+fi
+
+# Check if the abinitio_log_content file is empty or not
+if [ -s "${abinitio_log_content}" ]; then
+    echo "    v_abinitio_log_content := q'{${abinitio_log_content}}';" >> ${script_file}
+else
+    echo "    v_abinitio_log_content := 'NA';" >> ${script_file}
+fi
+
+-------------------------------------------------------
+# Conditionally include the UPDATE statement if param value is 1
+if [ "${param}" = "1" ]; then
+    echo "    UPDATE rex_app.RELEASE_LOGS SET column_name = value WHERE condition;" >> ${script_file}
+fi
+fi
