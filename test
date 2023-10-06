@@ -1,69 +1,15 @@
-# Prepare the SQL*Plus input script
-script_file=$(mktemp)
-echo "SET SERVEROUTPUT ON" > ${script_file}
-echo "SET DEFINE OFF" > ${script_file}
-echo "DECLARE" >> ${script_file}
-echo "    v_oracle_log_content CLOB;" >> ${script_file}
-echo "    v_abinitio_log_content CLOB;" >> ${script_file}
-echo "BEGIN" >> ${script_file}
-echo "    v_oracle_log_content := q'{${oracle_log_content}}';" >> ${script_file}
-echo "    v_abinitio_log_content := q'{${abinitio_log_content}}';" >> ${script_file}
-echo "    INSERT INTO rex_app.RELEASE_LOGS (RUNID,RELEASE_NAME,BUILD_NAME,BUILD_NUMBER,CURRENT_BUILD,INSERTED_TS,USER_LONG_NAME,LOGS_ORACLE,LOGS_ABINITIO_CHECKOUT,LOGS_ABINITIO_COMMANDS) values('$deploy_runid','$deploy_build_name','$deploy_build_name',$deploy_build_number,1,'1/AUG/23 12:00:00.000000000 AM','Rose',v_oracle_log_content,v_abinitio_log_content,'Test');" >> ${script_file}
-echo "    COMMIT;" >> ${script_file}
-echo "    DBMS_OUTPUT.PUT_LINE('Insert successful');" >> ${script_file}
-echo "EXCEPTION" >> ${script_file}
-echo "    WHEN OTHERS THEN" >> ${script_file}
-echo "        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);" >> ${script_file}
-echo "        ROLLBACK;" >> ${script_file}
-echo "END;" >> ${script_file}
-echo "/" >> ${script_file}
-echo "EXIT;" >> ${script_file}
--------------------------------------------------------
-
-
-# Check if the oracle_log_content file is empty or not
-if [ -s "${oracle_log_content}" ]; then
-    echo "    v_oracle_log_content := q'{${oracle_log_content}}';" >> ${script_file}
-else
-    echo "    v_oracle_log_content := 'NA';" >> ${script_file}
-fi
-
-# Check if the abinitio_log_content file is empty or not
-if [ -s "${abinitio_log_content}" ]; then
-    echo "    v_abinitio_log_content := q'{${abinitio_log_content}}';" >> ${script_file}
-else
-    echo "    v_abinitio_log_content := 'NA';" >> ${script_file}
-fi
-
--------------------------------------------------------
-# Conditionally include the UPDATE statement if param value is 1
-if [ "${param}" = "1" ]; then
-    echo "    UPDATE rex_app.RELEASE_LOGS SET column_name = value WHERE condition;" >> ${script_file}
-fi
-fi
-
--------------------------------------------------------
 # Extract components of the current date/time
 current_day=$(date +"%d")
 current_month=$(date +"%b" | tr 'a-z' 'A-Z')
 current_year=$(date +"%y")
-current_time=$(date +"%I:%M:%S.%N %p")
+current_time=$(date +"%I:%M:%S")
+nanoseconds=$(date +"%N" | cut -c1-9)  # Get only the first 9 digits of nanoseconds
+current_am_pm=$(date +"%p")
 
 # Combine components to get the desired timestamp format
-timestamp=$(printf "%s/%s/%s %s" $current_day $current_month $current_year $current_time)
+timestamp="${current_day}/${current_month}/${current_year} ${current_time}.${nanoseconds} ${current_am_pm}"
 
 # Rest of the script ...
 
 # Then use the $timestamp variable in place of the hardcoded timestamp:
 echo "    INSERT INTO rex_app.RELEASE_LOGS (RUNID,RELEASE_NAME,BUILD_NAME,BUILD_NUMBER,CURRENT_BUILD,INSERTED_TS,USER_LONG_NAME,LOGS_ORACLE,LOGS_ABINITIO_CHECKOUT,LOGS_ABINITIO_COMMANDS) values('$deploy_runid','$deploy_build_name','$deploy_build_name',$deploy_build_number,1,'$timestamp','Rose',v_oracle_log_content,v_abinitio_log_content,'Test');" >> ${script_file}
-
-
-
-
-nanoseconds=$(date +"%N")
-if [ -z "$nanoseconds" ]; then
-    nanoseconds="000000000"
-fi
-
-# Combine components to get the desired timestamp format
-timestamp=$(printf "%s/%s/%s %s.%s %s" $current_day $current_month $current_year $current_time $nanoseconds $current_am_pm)
