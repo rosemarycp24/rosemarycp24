@@ -1,15 +1,4 @@
-# Extract components of the current date/time
-current_day=$(date +"%d")
-current_month=$(date +"%b" | tr 'a-z' 'A-Z')
-current_year=$(date +"%y")
-current_time=$(date +"%I:%M:%S")
-nanoseconds=$(date +"%N" | cut -c1-9)  # Get only the first 9 digits of nanoseconds
-current_am_pm=$(date +"%p")
+oracle_log_content=$(grep -v '^$' #{deploy_or_rollback_dir}/deploy/#{unique_release_number}/sql_deploy_log_log.txt)
+abinitio_log_content=$(cat "#{deploy_or_rollback_dir}/deploy/#{unique_release_number}/abinitio_deploy_code_checkout_log.txt")
+abinitio_commands_log_contents=$(cat "#{deploy_or_rollback_dir}/deploy/${release_timestamp}/abinitio_commands_log.txt")
 
-# Combine components to get the desired timestamp format
-timestamp="${current_day}/${current_month}/${current_year} ${current_time}.${nanoseconds} ${current_am_pm}"
-
-# Rest of the script ...
-
-# Then use the $timestamp variable in place of the hardcoded timestamp:
-echo "    INSERT INTO rex_app.RELEASE_LOGS (RUNID,RELEASE_NAME,BUILD_NAME,BUILD_NUMBER,CURRENT_BUILD,INSERTED_TS,USER_LONG_NAME,LOGS_ORACLE,LOGS_ABINITIO_CHECKOUT,LOGS_ABINITIO_COMMANDS) values('$deploy_runid','$deploy_build_name','$deploy_build_name',$deploy_build_number,1,'$timestamp','Rose',v_oracle_log_content,v_abinitio_log_content,'Test');" >> ${script_file}
