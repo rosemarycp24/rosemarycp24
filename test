@@ -41,3 +41,18 @@ if [ "${param}" = "1" ]; then
     echo "    UPDATE rex_app.RELEASE_LOGS SET column_name = value WHERE condition;" >> ${script_file}
 fi
 fi
+
+-------------------------------------------------------
+# Extract components of the current date/time
+current_day=$(date +"%d")
+current_month=$(date +"%b" | tr 'a-z' 'A-Z')
+current_year=$(date +"%y")
+current_time=$(date +"%I:%M:%S.%N %p")
+
+# Combine components to get the desired timestamp format
+timestamp=$(printf "%s/%s/%s %s" $current_day $current_month $current_year $current_time)
+
+# Rest of the script ...
+
+# Then use the $timestamp variable in place of the hardcoded timestamp:
+echo "    INSERT INTO rex_app.RELEASE_LOGS (RUNID,RELEASE_NAME,BUILD_NAME,BUILD_NUMBER,CURRENT_BUILD,INSERTED_TS,USER_LONG_NAME,LOGS_ORACLE,LOGS_ABINITIO_CHECKOUT,LOGS_ABINITIO_COMMANDS) values('$deploy_runid','$deploy_build_name','$deploy_build_name',$deploy_build_number,1,'$timestamp','Rose',v_oracle_log_content,v_abinitio_log_content,'Test');" >> ${script_file}
