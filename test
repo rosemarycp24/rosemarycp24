@@ -1,4 +1,51 @@
-oracle_log_content=$(grep -v '^$' #{deploy_or_rollback_dir}/deploy/#{unique_release_number}/sql_deploy_log_log.txt)
-abinitio_log_content=$(cat "#{deploy_or_rollback_dir}/deploy/#{unique_release_number}/abinitio_deploy_code_checkout_log.txt")
-abinitio_commands_log_contents=$(cat "#{deploy_or_rollback_dir}/deploy/${release_timestamp}/abinitio_commands_log.txt")
+# Prepare the SQL*Plus input script
+script_file=$(mktemp)
+echo "SET SERVEROUTPUT ON" > ${script_file}
+echo "SET DEFINE OFF" > ${script_file}
+echo "DECLARE" >> ${script_file}
+echo "    v_oracle_log_content CLOB;" >> ${script_file}
+echo "    v_abinitio_log_content CLOB;" >> ${script_file}
+echo "BEGIN" >> ${script_file}
 
+# Check for existence and content of oracle_log_content
+if [ -f "${deploy_or_rollback_dir}/deploy/${unique_release_number}/sql_deploy_log_log.txt" ]; then
+    oracle_log_content=$(grep -v '^$' "${deploy_or_rollback_dir}/deploy/${unique_release_number}/sql_deploy_log_log.txt")
+else
+    oracle_log_content='NA'
+fi
+
+# Check for existence and content of abinitio_log_content
+if [ -f "${deploy_or_rollback_dir}/deploy/${unique_release_number}/abinitio_deploy_code_checkout_log.txt" ]; then
+    abinitio_log_content=$(cat "${deploy_or_rollback_dir}/deploy/${unique_release_number}/abinitio_deploy_code_checkout_log.txt")
+else
+    abinitio_log_content='NA'
+fi
+
+# Check for existence and content of abinitio_commands_log_contents
+if [ -f "${deploy_or_rollback_dir}/deploy/${release_timestamp}/abinitio_commands_log.txt" ]; then
+    abinitio_commands_log_contents=$(cat "${deploy_or_rollback_dir}/deploy/${release_timestamp}/abinitio_commands_log.txt")
+else
+    abinitio_commands_log_contents='NA'
+fi
+
+# Continue with the script as before...
+
+# Check if the oracle_log_content is empty or not
+if [ -z "$oracle_log_content" ]; then
+    oracle_log_content='NA'
+fi
+echo "    v_oracle_log_content := q'{${oracle_log_content}}';" >> ${script_file}
+
+# Check if the abinitio_log_content is empty or not
+if [ -z "$abinitio_log_content" ]; then
+    abinitio_log_content='NA'
+fi
+echo "    v_abinitio_log_content := q'{${abinitio_log_content}}';" >> ${script_file}
+
+echo "    INSERT INTO rex_app.RELEASE_LOGS (RUNID,RELEASE_NAME,BUILD_NAME,BUILD_NUMBER,CURRENT_BUILD,INSERTED_TS,USER_LONG_NAME,LOGS_ORACLE,LOGS_ABINITIO_CHECKOUT,LOGS_ABINITIO_COMMANDS) values('$deploy_runid','$deploy_build_name','$deploy_build_name',$deploy_build_number,1,'1/AUG/23 12:00:00.000000000 AM','Rose',v_oracle_log_content,v_abinitio_log_content,'Test');" >> ${script_file}
+echo "    COMMIT;" >> ${script_file}
+echo "    DBMS_OUTPUT.PUT_LINE('Insert successful');" >> ${script_file}
+echo "EXCEPTION" >> ${script_file}
+echo "    WHEN OTHERS THEN" >> ${script_file}
+echo "        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);" >> ${script_file}
+echo
