@@ -1,0 +1,46 @@
+#!/bin/ksh
+
+# Check for existence of log files
+oracle_log_file="/home/chowarro-adm/sql_deploy_log_log.txt"
+abinitio_log_file="/home/chowarro-adm/20230821094257_abinitio_log.txt"
+abinitio_commands_log_file="/home/chowarro-adm/abinitio_commands_log.txt"
+
+script_file="/home/chowarro-adm/script_File.txt"
+
+# Initialize PL/SQL script
+echo "SET SERVEROUTPUT ON" > ${script_file}
+echo "SET DEFINE OFF" >> ${script_file}
+echo "DECLARE" >> ${script_file}
+echo "    v_oracle_log_content CLOB;" >> ${script_file}
+echo "    v_abinitio_log_content CLOB;" >> ${script_file}
+echo "    v_abinitio_commands_log_content CLOB;" >> ${script_file}
+echo "BEGIN" >> ${script_file}
+echo "    DBMS_LOB.CREATETEMPORARY(v_oracle_log_content, TRUE);" >> ${script_file}
+echo "    DBMS_LOB.CREATETEMPORARY(v_abinitio_log_content, TRUE);" >> ${script_file}
+echo "    DBMS_LOB.CREATETEMPORARY(v_abinitio_commands_log_content, TRUE);" >> ${script_file}
+
+# Process oracle_log_file if exists
+if [[ -f ${oracle_log_file} ]]; then
+    while IFS= read -r line; do
+        # Be mindful of single quote characters within the content
+        line=$(echo "${line}" | sed "s/'/''/g")
+        echo "    DBMS_LOB.WRITEAPPEND(v_oracle_log_content, LENGTH('${line}'), '${line}');" >> ${script_file}
+    done < "${oracle_log_file}"
+else
+    echo "    DBMS_LOB.WRITEAPPEND(v_oracle_log_content, LENGTH('NA'), 'NA');" >> ${script_file}
+fi
+
+# Similar blocks for other log files...
+
+# Continue your PL/SQL block...
+echo "    -- Your other PL/SQL code here..." >> ${script_file}
+
+echo "    DBMS_LOB.FREETEMPORARY(v_oracle_log_content);" >> ${script_file}
+echo "    DBMS_LOB.FREETEMPORARY(v_abinitio_log_content);" >> ${script_file}
+echo "    DBMS_LOB.FREETEMPORARY(v_abinitio_commands_log_content);" >> ${script_file}
+echo "END;" >> ${script_file}
+echo "/" >> ${script_file}
+echo "EXIT;" >> ${script_file}
+
+# Please consider using a wallet or secure external password store for credentials
+sqlplus -S REX_APP/Rex_bld_app_01!@REX_BLD @${script_file}
