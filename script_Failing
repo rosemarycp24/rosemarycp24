@@ -1,0 +1,53 @@
+if [ -f "/home/chowarro-adm/sql_deploy_log_log.txt" ]; then
+    oracle_log_content=$(grep -v '^$' "/home/chowarro-adm/sql_deploy_log_log.txt")
+else
+    oracle_log_content='NA'
+fi
+
+# Check for existence and content of abinitio_log_content
+if [ -f "/home/chowarro-adm/20230821094257_abinitio_log.txt" ]; then
+    abinitio_log_content=$(cat "/home/chowarro-adm/20230821094257_abinitio_log.txt")
+else
+    abinitio_log_content='NA'
+fi
+
+# Check for existence and content of abinitio_commands_log_contents
+if [ -f "/home/chowarro-adm/abinitio_commands_log.txt" ]; then
+    abinitio_commands_log_contents=$(cat "/home/chowarro-adm//abinitio_commands_log.txt")
+else
+    abinitio_commands_log_contents='NA'
+fi
+
+
+
+# Prepare the SQL*Plus input script
+script_file="/home/chowarro-adm/script_File.txt"
+echo "SET SERVEROUTPUT ON" > ${script_file}
+echo "SET DEFINE OFF" > ${script_file}
+echo "DECLARE" >> ${script_file}
+echo "    v_oracle_log_content CLOB;" >> ${script_file}
+echo "    v_abinitio_log_content CLOB;" >> ${script_file}
+echo "    v_abinitio_commands_log_content CLOB;" >> ${script_file}
+echo "BEGIN" >> ${script_file}
+echo "    v_oracle_log_content := q'{${oracle_log_content}}';" >> ${script_file}
+echo "    v_abinitio_log_content := q'{${abinitio_log_content}}';" >> ${script_file}
+echo "    v_abinitio_commands_log_content := q'{${abinitio_commands_log_content}}';" >> ${script_file}
+# Conditionally include the UPDATE statement if param value is 1
+if [[ $current_runid -ge 1 ]]; then
+        echo "    UPDATE rex_app.RELEASE_LOGS set current_build=0 where RUNID=$current_runid;" >> ${script_file}
+fi
+echo "    INSERT INTO rex_app.RELEASE_LOGS (RUNID,RELEASE_NAME,BUILD_NAME,BUILD_NUMBER,CURRENT_BUILD,INSERTED_TS,USER_LONG_NAME,LOGS_ORACLE,LOGS_ABINITIO_CHECKOUT,LOGS_ABINITIO_COMMANDS) values('3','568.0.9','566-rex-12-OCT-2023',566,1,'$timestamp','Rose',v_oracle_log_content,v_abinitio_log_content,v_abinitio_commands_log_content);" >> ${script_file}
+echo "    COMMIT;" >> ${script_file}
+echo "    DBMS_OUTPUT.PUT_LINE('Insert successful');" >> ${script_file}
+echo "EXCEPTION" >> ${script_file}
+echo "    WHEN OTHERS THEN" >> ${script_file}
+echo "        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);" >> ${script_file}
+echo "        ROLLBACK;" >> ${script_file}
+echo "END;" >> ${script_file}
+echo "/" >> ${script_file}
+echo "EXIT;" >> ${script_file}
+
+echo "Thes script file is --------------------------------------------------------------------------------------------------"
+#cat ${script_file}
+# Run SQL*Plus with the generated script
+sqlplus -S REX_APP/Rex_bld_app_01!@REX_BLD @${script_file}
