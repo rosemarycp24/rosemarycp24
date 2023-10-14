@@ -1,3 +1,6 @@
+sqlplus -S #{DB_USER}/#{DB_PASSWORD}@#{DB_SID} @${script_file} -bind "oracle_log_content=${oracle_log_content}" -bind "abinitio_log_content=${abinitio_log_content}" -bind "abinitio_commands_log_content=${abinitio_commands_log_contents}"
+
+
 If you want to modify your Korn Shell (ksh) script to prevent the "String literal is too long" error when inserting long strings into Oracle, you can use the following approach:
 
 1. **Use Bind Variables**: Instead of constructing the SQL statement with string concatenation, use bind variables. Bind variables are placeholders in your SQL statement that are later filled in with values. They are more efficient and eliminate the "String literal is too long" issue.
