@@ -1,130 +1,355 @@
- dbms_lob.append(v_abinitio_log_content,'  '||q'{      3583 appconf/t.frtb_mx_eod_jump_default.appconf                                                                application/x-abinitio-application-configuration   Update File
-                                                 *
-ERROR at line 10:
-ORA-06550: line 10, column 50:
-PLS-00172: string literal too long
+SET SERVEROUTPUT ON
+SET DEFINE OFF
+DECLARE
+    v_oracle_log_content CLOB := EMPTY_CLOB();
+    v_abinitio_log_content CLOB := EMPTY_CLOB();
+    v_abinitio_commands_log_content CLOB :=EMPTY_CLOB();
+BEGIN
+    v_oracle_log_content := 'Oracle log : ';
+    v_abinitio_log_content := 'Abinitio log : ';
+    v_abinitio_commands_log_content := 'Abinitio Commands log : ';
+    dbms_lob.append(v_oracle_log_content,'  '||q'{}');
+    dbms_lob.append(v_abinitio_log_content,'  '||q'{      3583 appconf/t.frtb_mx_eod_jump_default.appconf                                                                application/x-abinitio-application-configuration   Update File
+     11902 pset/inputs/rex_app/t.frtb_mx_eod_jump_default.pset                                                       text/x-abinitio-pset                               Update File
+     15485 Bytes exported
+      1776 dml/pl/capital_multiplier/var_capital_multiplier_backtest.dml                                               text/x-abinitio-dml                                Update File
+   1363436 mp/back_test/var_captial_attribution.mp                                                                     application/x-abinitio-graph                       Update File
+        93 pset/pl/mre/capital_attribution/calculate_capital_attribution.pset                                          text/x-abinitio-pset                               Update File
+      3840 pset/pl/stress/mx/stress_jump_to_defaults_results.pset                                                      text/x-abinitio-pset                               Update File
+      7994 run/var_captial_attribution.ksh                                                                             text/x-shell.ksh                                   Export from Repository
+   1377139 Bytes exported
+         0 .project-end.ksh                                                                                                                                                   text/x-shell.ksh                                   Export from Repository
+        16 .project-start.ksh                                                                                                                                                 text/x-shell.ksh                                   Export from Repository
+       722 .project.pset                                                                                                                                                      text/x-abinitio-pset                               Export from Repository
+    698662 appconf/DQ.TMR_VEGA_Verify_SLA_And_Rejects.appconf                                                                                                                 application/x-abinitio-application-configuration   Export from Repository
+    682391 appconf/dq.APS116_SCALING_FACTOR_RNIV_Quarterly_Check.appconf                                                                                                      application/x-abinitio-application-configuration   Export from Repository
+    672869 appconf/dq.APS116_SCALING_FACTOR_VAR_SVAR_Check.appconf                                                                                                            application/x-abinitio-application-configuration   Export from Repository
+    707388 appconf/dq.APS116_SCALING_FACTOR_Verify_SLA_And_Scalar_Factor_Check.appconf                                                                                        application/x-abinitio-application-configuration   Export from Repository
+    696125 appconf/dq.TMR_CREDIT_SPREAD_DELTA_Rejects_Check.appconf                                                                                                           application/x-abinitio-application-configuration   Export from Repository
+    691912 appconf/dq.TMR_CREDIT_SPREAD_DELTA_Sensitivity_and_TotalVar_Check.appconf                                                                                          application/x-abinitio-application-configuration   Export from Repository
+    688029 appconf/dq.TMR_CREDIT_SPREAD_DELTA_Verify_SLA.appconf                                                                                                              application/x-abinitio-application-configuration   Export from Repository
+    701536 appconf/dq.TMR_INTEREST_RATE_DELTA_Rejects_Check.appconf                                                                                                           application/x-abinitio-application-configuration   Export from Repository
+    691933 appconf/dq.TMR_INTEREST_RATE_DELTA_Sensitivity_and_TotalVar_Check.appconf                                                                                          application/x-abinitio-application-configuration   Export from Repository
+    692315 appconf/dq.TMR_INTEREST_RATE_DELTA_Verify_SLA.appconf                                                                                                              application/x-abinitio-application-configuration   Export from Repository
+    689145 appconf/dq.TMR_RISK_NOT_IN_VAR-RNIV_Audit_Check.appconf                                                                                                            application/x-abinitio-application-configuration   Export from Repository
+    704013 appconf/dq.TMR_RISK_NOT_IN_VAR-RNIV_Check_And_Verify_SLA.appconf                                                                                                   application/x-abinitio-application-configuration   Export from Repository
+    691388 appconf/dq.TMR_RISK_NOT_IN_VAR-RNIV_Volatality_Check.appconf                                                                                                       application/x-abinitio-application-configuration   Export from Repository
+    691569 appconf/dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Check.appconf                                                                                                       application/x-abinitio-application-configuration   Export from Repository
+    717693 appconf/dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Quarterly_Check.appconf                                                                                             application/x-abinitio-application-configuration   Export from Repository
+    685127 appconf/dq.TMR_SM_CAPITAL_AMOUNT_Monthly_movement.appconf                                                                                                          application/x-abinitio-application-configuration   Export from Repository
+    680361 appconf/dq.TMR_SM_CAPITAL_AMOUNT_Verify_SLA.appconf                                                                                                                application/x-abinitio-application-configuration   Export from Repository
+    694931 appconf/dq.TMR_VEGA_Rejects_Check.appconf                                                                                                                          application/x-abinitio-application-configuration   Export from Repository
+    691143 appconf/dq.TMR_VEGA_Sensitivity_and_TotalVar_Check.appconf                                                                                                         application/x-abinitio-application-configuration   Export from Repository
+    687242 appconf/dq.TMR_VEGA_Verify_SLA.appconf                                                                                                                             application/x-abinitio-application-configuration   Export from Repository
+    686703 appconf/dq.fileinput-test.appconf                                                                                                                                  application/x-abinitio-application-configuration   Export from Repository
+     81111 appconf/dq.sample.appconf                                                                                                                                          application/x-abinitio-application-configuration   Export from Repository
+       763 appconf/rex_dq_unload-metadata-hub.appconf                                                                                                                         application/x-abinitio-application-configuration   Export from Repository
+      1968 appconf/sql.etl_audit_files.appconf                                                                                                                                application/x-abinitio-application-configuration   Export from Repository
+      1799 appconf/sql.etl_audit_files_TMR_CREDIT_SPREAD_DELTA.appconf                                                                                                        application/x-abinitio-application-configuration   Export from Repository
+      1856 appconf/sql.etl_audit_files_TMR_INTEREST_RATE_DELTA.appconf                                                                                                        application/x-abinitio-application-configuration   Export from Repository
+      1754 appconf/sql.etl_audit_files_TMR_VEGA.appconf                                                                                                                       application/x-abinitio-application-configuration   Export from Repository
+      2401 appconf/sql.limit_utilisation_TMR_Credit_Spread_Delta_Verify_SLA.appconf                                                                                           application/x-abinitio-application-configuration   Export from Repository
+      2483 appconf/sql.limit_utilisation_TMR_Interest_Rate_Delta_Verify_SLA.appconf                                                                                           application/x-abinitio-application-configuration   Export from Repository
+      2406 appconf/sql.limit_utilisation_TMR_Vega_Verify_SLA.appconf                                                                                                          application/x-abinitio-application-configuration   Export from Repository
+      2170 appconf/sql.map_var_scalar_VAR_SVAR_scale_factor_check.appconf                                                                                                     application/x-abinitio-application-configuration   Export from Repository
+      2582 appconf/sql.map_var_scalar_quarterly_scalar_factor_check.appconf                                                                                                   application/x-abinitio-application-configuration   Export from Repository
+      2846 appconf/sql.map_var_scalar_quarterly_scale_facor_RNIV_check.appconf                                                                                                application/x-abinitio-application-configuration   Export from Repository
+      1759 appconf/sql.map_var_scalar_verify_SLA_And_Scalar_Factor_Check.appconf                                                                                              application/x-abinitio-application-configuration   Export from Repository
+      3172 appconf/sql.mods_spec_risk_credit_quarterly_rating_check.appconf                                                                                                   application/x-abinitio-application-configuration   Export from Repository
+      2593 appconf/sql.mods_spec_risk_credit_rating_extract.appconf                                                                                                           application/x-abinitio-application-configuration   Export from Repository
+      2529 appconf/sql.mods_spec_risk_table_1_cba_capital_amount_agg.appconf                                                                                                  application/x-abinitio-application-configuration   Export from Repository
+      1796 appconf/sql.mods_spec_risk_table_1_cba_verify_SLA.appconf                                                                                                          application/x-abinitio-application-configuration   Export from Repository
+      2020 appconf/sql.var_mre_eod_addon_rniv.appconf                                                                                                                         application/x-abinitio-application-configuration   Export from Repository
+      1442 appconf/sql.var_mre_eod_addon_rniv_backup.appconf                                                                                                                  application/x-abinitio-application-configuration   Export from Repository
+      3009 appconf/sql.var_mre_eod_addon_rniv_volatality.appconf                                                                                                              application/x-abinitio-application-configuration   Export from Repository
+        95 cfg/expressit_systems.cfg                                                                                                                                          text/x-abinitio-db-cfg                             Export from Repository
+    116090 dml/embedded_packages/DQ.TMR_VEGA_Verify_SLA_And_Rejects/validation_ruleset_embedded_package.dml                                                                   text/x-abinitio-dml                                Export from Repository
+    112441 dml/embedded_packages/dq.APS116_SCALING_FACTOR_RNIV_Quarterly_Check/validation_ruleset_embedded_package.dml                                                        text/x-abinitio-dml                                Export from Repository
+    112441 dml/embedded_packages/dq.APS116_SCALING_FACTOR_VAR_SVAR_Check/validation_ruleset_embedded_package.dml                                                              text/x-abinitio-dml                                Export from Repository
+    112441 dml/embedded_packages/dq.APS116_SCALING_FACTOR_Verify_SLA_And_Scalar_Factor_Check/validation_ruleset_embedded_package.dml                                          text/x-abinitio-dml                                Export from Repository
+    116090 dml/embedded_packages/dq.TMR_CREDIT_SPREAD_DELTA_Rejects_Check/validation_ruleset_embedded_package.dml                                                             text/x-abinitio-dml                                Export from Repository
+    117856 dml/embedded_packages/dq.TMR_CREDIT_SPREAD_DELTA_Sensitivity_and_TotalVar_Check/validation_ruleset_embedded_package.dml                                            text/x-abinitio-dml                                Export from Repository
+    116090 dml/embedded_packages/dq.TMR_CREDIT_SPREAD_DELTA_Verify_SLA/validation_ruleset_embedded_package.dml                                                                text/x-abinitio-dml                                Export from Repository
+    117856 dml/embedded_packages/dq.TMR_INTEREST_RATE_DELTA_Rejects_Check/validation_ruleset_embedded_package.dml                                                             text/x-abinitio-dml                                Export from Repository
+    117856 dml/embedded_packages/dq.TMR_INTEREST_RATE_DELTA_Sensitivity_and_TotalVar_Check/validation_ruleset_embedded_package.dml                                            text/x-abinitio-dml                                Export from Repository
+    117856 dml/embedded_packages/dq.TMR_INTEREST_RATE_DELTA_Verify_SLA/validation_ruleset_embedded_package.dml                                                                text/x-abinitio-dml                                Export from Repository
+    112441 dml/embedded_packages/dq.TMR_RISK_NOT_IN_VAR-RNIV_Audit_Check/validation_ruleset_embedded_package.dml                                                              text/x-abinitio-dml                                Export from Repository
+    112441 dml/embedded_packages/dq.TMR_RISK_NOT_IN_VAR-RNIV_Check_And_Verify_SLA/validation_ruleset_embedded_package.dml                                                     text/x-abinitio-dml                                Export from Repository
+    112441 dml/embedded_packages/dq.TMR_RISK_NOT_IN_VAR-RNIV_Volatality_Check/validation_ruleset_embedded_package.dml                                                         text/x-abinitio-dml                                Export from Repository
+    114812 dml/embedded_packages/dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Check/validation_ruleset_embedded_package.dml                                                         text/x-abinitio-dml                                Export from Repository
+    114812 dml/embedded_packages/dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Quarterly_Check/validation_ruleset_embedded_package.dml                                               text/x-abinitio-dml                                Export from Repository
+    114812 dml/embedded_packages/dq.TMR_SM_CAPITAL_AMOUNT_Monthly_movement/validation_ruleset_embedded_package.dml                                                            text/x-abinitio-dml                                Export from Repository
+    114812 dml/embedded_packages/dq.TMR_SM_CAPITAL_AMOUNT_Verify_SLA/validation_ruleset_embedded_package.dml                                                                  text/x-abinitio-dml                                Export from Repository
+    116090 dml/embedded_packages/dq.TMR_VEGA_Rejects_Check/validation_ruleset_embedded_package.dml                                                                            text/x-abinitio-dml                                Export from Repository
+    117856 dml/embedded_packages/dq.TMR_VEGA_Sensitivity_and_TotalVar_Check/validation_ruleset_embedded_package.dml                                                           text/x-abinitio-dml                                Export from Repository
+    116090 dml/embedded_packages/dq.TMR_VEGA_Verify_SLA/validation_ruleset_embedded_package.dml                                                                               text/x-abinitio-dml                                Export from Repository
+    116090 dml/embedded_packages/dq.fileinput-test/validation_ruleset_embedded_package.dml                                                                                    text/x-abinitio-dml                                Export from Repository
+     10826 dml/embedded_packages/dq.sample/validation_ruleset_embedded_package.dml                                                                                            text/x-abinitio-dml                                Export from Repository
+        12 misc/testfile.txt                                                                                                                                                  text/plain                                         Export from Repository
+      1727 pset/DQ.TMR_VEGA_Verify_SLA_And_Rejects/input_dataset.DQ.TMR_VEGA_Verify_SLA_And_Rejects.pset                                                                      text/x-abinitio-pset                               Export from Repository
+         0 pset/DQ.TMR_VEGA_Verify_SLA_And_Rejects/input_dataset_cardinality_test.DQ.TMR_VEGA_Verify_SLA_And_Rejects.pset                                                     text/x-abinitio-pset                               Export from Repository
+      1325 pset/DQ.TMR_VEGA_Verify_SLA_And_Rejects/input_dataset_repartitioned.DQ.TMR_VEGA_Verify_SLA_And_Rejects.pset                                                        text/x-abinitio-pset                               Export from Repository
+       213 pset/DQ.TMR_VEGA_Verify_SLA_And_Rejects/input_provider.DQ.TMR_VEGA_Verify_SLA_And_Rejects.pset                                                                     text/x-abinitio-pset                               Export from Repository
+      1834 pset/DQ.TMR_VEGA_Verify_SLA_And_Rejects/prepare.DQ.TMR_VEGA_Verify_SLA_And_Rejects.pset                                                                            text/x-abinitio-pset                               Export from Repository
+       274 pset/DQ.TMR_VEGA_Verify_SLA_And_Rejects/update.DQ.TMR_VEGA_Verify_SLA_And_Rejects.pset                                                                             text/x-abinitio-pset                               Export from Repository
+       291 pset/Unload_MHub_Lookup_Files_rex_dq_unload-metadata-hub.pset                                                                                                      text/x-abinitio-pset                               Export from Repository
+      2895 pset/compute_and_import_dq.APS116_SCALING_FACTOR_RNIV_Quarterly_Check.pset                                                                                         text/x-abinitio-pset                               Export from Repository
+      2849 pset/compute_and_import_dq.APS116_SCALING_FACTOR_VAR_SVAR_Check.pset                                                                                               text/x-abinitio-pset                               Export from Repository
+      2983 pset/compute_and_import_dq.APS116_SCALING_FACTOR_Verify_SLA_And_Scalar_Factor_Check.pset                                                                           text/x-abinitio-pset                               Export from Repository
+      2849 pset/compute_and_import_dq.TMR_CREDIT_SPREAD_DELTA_Rejects_Check.pset                                                                                              text/x-abinitio-pset                               Export from Repository
+      3025 pset/compute_and_import_dq.TMR_CREDIT_SPREAD_DELTA_Sensitivity_and_TotalVar_Check.pset                                                                             text/x-abinitio-pset                               Export from Repository
+      2857 pset/compute_and_import_dq.TMR_CREDIT_SPREAD_DELTA_Verify_SLA.pset                                                                                                 text/x-abinitio-pset                               Export from Repository
+      2847 pset/compute_and_import_dq.TMR_INTEREST_RATE_DELTA_Rejects_Check.pset                                                                                              text/x-abinitio-pset                               Export from Repository
+      3025 pset/compute_and_import_dq.TMR_INTEREST_RATE_DELTA_Sensitivity_and_TotalVar_Check.pset                                                                             text/x-abinitio-pset                               Export from Repository
+      2855 pset/compute_and_import_dq.TMR_INTEREST_RATE_DELTA_Verify_SLA.pset                                                                                                 text/x-abinitio-pset                               Export from Repository
+      2752 pset/compute_and_import_dq.TMR_RISK_NOT_IN_VAR-RNIV_Audit_Check.pset                                                                                               text/x-abinitio-pset                               Export from Repository
+      2820 pset/compute_and_import_dq.TMR_RISK_NOT_IN_VAR-RNIV_Check_And_Verify_SLA.pset                                                                                      text/x-abinitio-pset                               Export from Repository
+      2818 pset/compute_and_import_dq.TMR_RISK_NOT_IN_VAR-RNIV_Volatality_Check.pset                                                                                          text/x-abinitio-pset                               Export from Repository
+      2867 pset/compute_and_import_dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Check.pset                                                                                          text/x-abinitio-pset                               Export from Repository
+      2943 pset/compute_and_import_dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Quarterly_Check.pset                                                                                text/x-abinitio-pset                               Export from Repository
+      2867 pset/compute_and_import_dq.TMR_SM_CAPITAL_AMOUNT_Monthly_movement.pset                                                                                             text/x-abinitio-pset                               Export from Repository
+      2815 pset/compute_and_import_dq.TMR_SM_CAPITAL_AMOUNT_Verify_SLA.pset                                                                                                   text/x-abinitio-pset                               Export from Repository
+      2729 pset/compute_and_import_dq.TMR_VEGA_Rejects_Check.pset                                                                                                             text/x-abinitio-pset                               Export from Repository
+      2905 pset/compute_and_import_dq.TMR_VEGA_Sensitivity_and_TotalVar_Check.pset                                                                                            text/x-abinitio-pset                               Export from Repository
+      2737 pset/compute_and_import_dq.TMR_VEGA_Verify_SLA.pset                                                                                                                text/x-abinitio-pset                               Export from Repository
+      2745 pset/compute_and_import_dq.fileinput-test.pset                                                                                                                     text/x-abinitio-pset                               Export from Repository
+      1345 pset/compute_and_import_dq.sample.pset                                                                                                                             text/x-abinitio-pset                               Export from Repository
+      1642 pset/dq.APS116_SCALING_FACTOR_RNIV_Quarterly_Check/input_dataset.dq.APS116_SCALING_FACTOR_RNIV_Quarterly_Check.pset                                                text/x-abinitio-pset                               Export from Repository
+         0 pset/dq.APS116_SCALING_FACTOR_RNIV_Quarterly_Check/input_dataset_cardinality_test.dq.APS116_SCALING_FACTOR_RNIV_Quarterly_Check.pset                               text/x-abinitio-pset                               Export from Repository
+      1217 pset/dq.APS116_SCALING_FACTOR_RNIV_Quarterly_Check/input_dataset_repartitioned.dq.APS116_SCALING_FACTOR_RNIV_Quarterly_Check.pset                                  text/x-abinitio-pset                               Export from Repository
+       236 pset/dq.APS116_SCALING_FACTOR_RNIV_Quarterly_Check/input_provider.dq.APS116_SCALING_FACTOR_RNIV_Quarterly_Check.pset                                               text/x-abinitio-pset                               Export from Repository
+      1737 pset/dq.APS116_SCALING_FACTOR_RNIV_Quarterly_Check/prepare.dq.APS116_SCALING_FACTOR_RNIV_Quarterly_Check.pset                                                      text/x-abinitio-pset                               Export from Repository
+       296 pset/dq.APS116_SCALING_FACTOR_RNIV_Quarterly_Check/update.dq.APS116_SCALING_FACTOR_RNIV_Quarterly_Check.pset                                                       text/x-abinitio-pset                               Export from Repository
+      1020 pset/dq.APS116_SCALING_FACTOR_VAR_SVAR_Check/input_dataset.dq.APS116_SCALING_FACTOR_VAR_SVAR_Check.pset                                                            text/x-abinitio-pset                               Export from Repository
+         0 pset/dq.APS116_SCALING_FACTOR_VAR_SVAR_Check/input_dataset_cardinality_test.dq.APS116_SCALING_FACTOR_VAR_SVAR_Check.pset                                           text/x-abinitio-pset                               Export from Repository
+       600 pset/dq.APS116_SCALING_FACTOR_VAR_SVAR_Check/input_dataset_repartitioned.dq.APS116_SCALING_FACTOR_VAR_SVAR_Check.pset                                              text/x-abinitio-pset                               Export from Repository
+       231 pset/dq.APS116_SCALING_FACTOR_VAR_SVAR_Check/input_provider.dq.APS116_SCALING_FACTOR_VAR_SVAR_Check.pset                                                           text/x-abinitio-pset                               Export from Repository
+      1114 pset/dq.APS116_SCALING_FACTOR_VAR_SVAR_Check/prepare.dq.APS116_SCALING_FACTOR_VAR_SVAR_Check.pset                                                                  text/x-abinitio-pset                               Export from Repository
+       284 pset/dq.APS116_SCALING_FACTOR_VAR_SVAR_Check/update.dq.APS116_SCALING_FACTOR_VAR_SVAR_Check.pset                                                                   text/x-abinitio-pset                               Export from Repository
+      2875 pset/dq.APS116_SCALING_FACTOR_Verify_SLA_And_Scalar_Factor_Check/input_dataset.dq.APS116_SCALING_FACTOR_Verify_SLA_And_Scalar_Factor_Check.pset                    text/x-abinitio-pset                               Export from Repository
+         0 pset/dq.APS116_SCALING_FACTOR_Verify_SLA_And_Scalar_Factor_Check/input_dataset_cardinality_test.dq.APS116_SCALING_FACTOR_Verify_SLA_And_Scalar_Factor_Check.pset   text/x-abinitio-pset                               Export from Repository
+      2448 pset/dq.APS116_SCALING_FACTOR_Verify_SLA_And_Scalar_Factor_Check/input_dataset_repartitioned.dq.APS116_SCALING_FACTOR_Verify_SLA_And_Scalar_Factor_Check.pset      text/x-abinitio-pset                               Export from Repository
+       238 pset/dq.APS116_SCALING_FACTOR_Verify_SLA_And_Scalar_Factor_Check/input_provider.dq.APS116_SCALING_FACTOR_Verify_SLA_And_Scalar_Factor_Check.pset                   text/x-abinitio-pset                               Export from Repository
+      2982 pset/dq.APS116_SCALING_FACTOR_Verify_SLA_And_Scalar_Factor_Check/prepare.dq.APS116_SCALING_FACTOR_Verify_SLA_And_Scalar_Factor_Check.pset                          text/x-abinitio-pset                               Export from Repository
+       324 pset/dq.APS116_SCALING_FACTOR_Verify_SLA_And_Scalar_Factor_Check/update.dq.APS116_SCALING_FACTOR_Verify_SLA_And_Scalar_Factor_Check.pset                           text/x-abinitio-pset                               Export from Repository
+      1754 pset/dq.TMR_CREDIT_SPREAD_DELTA_Rejects_Check/input_dataset.dq.TMR_CREDIT_SPREAD_DELTA_Rejects_Check.pset                                                          text/x-abinitio-pset                               Export from Repository
+         0 pset/dq.TMR_CREDIT_SPREAD_DELTA_Rejects_Check/input_dataset_cardinality_test.dq.TMR_CREDIT_SPREAD_DELTA_Rejects_Check.pset                                         text/x-abinitio-pset                               Export from Repository
+      1337 pset/dq.TMR_CREDIT_SPREAD_DELTA_Rejects_Check/input_dataset_repartitioned.dq.TMR_CREDIT_SPREAD_DELTA_Rejects_Check.pset                                            text/x-abinitio-pset                               Export from Repository
+       228 pset/dq.TMR_CREDIT_SPREAD_DELTA_Rejects_Check/input_provider.dq.TMR_CREDIT_SPREAD_DELTA_Rejects_Check.pset                                                         text/x-abinitio-pset                               Export from Repository
+      1852 pset/dq.TMR_CREDIT_SPREAD_DELTA_Rejects_Check/prepare.dq.TMR_CREDIT_SPREAD_DELTA_Rejects_Check.pset                                                                text/x-abinitio-pset                               Export from Repository
+       286 pset/dq.TMR_CREDIT_SPREAD_DELTA_Rejects_Check/update.dq.TMR_CREDIT_SPREAD_DELTA_Rejects_Check.pset                                                                 text/x-abinitio-pset                               Export from Repository
+      1550 pset/dq.TMR_CREDIT_SPREAD_DELTA_Sensitivity_and_TotalVar_Check/input_dataset.dq.TMR_CREDIT_SPREAD_DELTA_Sensitivity_and_TotalVar_Check.pset                        text/x-abinitio-pset                               Export from Repository
+         0 pset/dq.TMR_CREDIT_SPREAD_DELTA_Sensitivity_and_TotalVar_Check/input_dataset_cardinality_test.dq.TMR_CREDIT_SPREAD_DELTA_Sensitivity_and_TotalVar_Check.pset       text/x-abinitio-pset                               Export from Repository
+      1175 pset/dq.TMR_CREDIT_SPREAD_DELTA_Sensitivity_and_TotalVar_Check/input_dataset_repartitioned.dq.TMR_CREDIT_SPREAD_DELTA_Sensitivity_and_TotalVar_Check.pset          text/x-abinitio-pset                               Export from Repository
+      1707 pset/dq.TMR_CREDIT_SPREAD_DELTA_Sensitivity_and_TotalVar_Check/prepare.dq.TMR_CREDIT_SPREAD_DELTA_Sensitivity_and_TotalVar_Check.pset                              text/x-abinitio-pset                               Export from Repository
+       320 pset/dq.TMR_CREDIT_SPREAD_DELTA_Sensitivity_and_TotalVar_Check/update.dq.TMR_CREDIT_SPREAD_DELTA_Sensitivity_and_TotalVar_Check.pset                               text/x-abinitio-pset                               Export from Repository
+      1246 pset/dq.TMR_CREDIT_SPREAD_DELTA_Verify_SLA/input_dataset.dq.TMR_CREDIT_SPREAD_DELTA_Verify_SLA.pset                                                                text/x-abinitio-pset                               Export from Repository
+         0 pset/dq.TMR_CREDIT_SPREAD_DELTA_Verify_SLA/input_dataset_cardinality_test.dq.TMR_CREDIT_SPREAD_DELTA_Verify_SLA.pset                                               text/x-abinitio-pset                               Export from Repository
+       816 pset/dq.TMR_CREDIT_SPREAD_DELTA_Verify_SLA/input_dataset_repartitioned.dq.TMR_CREDIT_SPREAD_DELTA_Verify_SLA.pset                                                  text/x-abinitio-pset                               Export from Repository
+       241 pset/dq.TMR_CREDIT_SPREAD_DELTA_Verify_SLA/input_provider.dq.TMR_CREDIT_SPREAD_DELTA_Verify_SLA.pset                                                               text/x-abinitio-pset                               Export from Repository
+      1328 pset/dq.TMR_CREDIT_SPREAD_DELTA_Verify_SLA/prepare.dq.TMR_CREDIT_SPREAD_DELTA_Verify_SLA.pset                                                                      text/x-abinitio-pset                               Export from Repository
+       280 pset/dq.TMR_CREDIT_SPREAD_DELTA_Verify_SLA/update.dq.TMR_CREDIT_SPREAD_DELTA_Verify_SLA.pset                                                                       text/x-abinitio-pset                               Export from Repository
+      1828 pset/dq.TMR_INTEREST_RATE_DELTA_Rejects_Check/input_dataset.dq.TMR_INTEREST_RATE_DELTA_Rejects_Check.pset                                                          text/x-abinitio-pset                               Export from Repository
+         0 pset/dq.TMR_INTEREST_RATE_DELTA_Rejects_Check/input_dataset_cardinality_test.dq.TMR_INTEREST_RATE_DELTA_Rejects_Check.pset                                         text/x-abinitio-pset                               Export from Repository
+      1411 pset/dq.TMR_INTEREST_RATE_DELTA_Rejects_Check/input_dataset_repartitioned.dq.TMR_INTEREST_RATE_DELTA_Rejects_Check.pset                                            text/x-abinitio-pset                               Export from Repository
+       228 pset/dq.TMR_INTEREST_RATE_DELTA_Rejects_Check/input_provider.dq.TMR_INTEREST_RATE_DELTA_Rejects_Check.pset                                                         text/x-abinitio-pset                               Export from Repository
+      1926 pset/dq.TMR_INTEREST_RATE_DELTA_Rejects_Check/prepare.dq.TMR_INTEREST_RATE_DELTA_Rejects_Check.pset                                                                text/x-abinitio-pset                               Export from Repository
+       286 pset/dq.TMR_INTEREST_RATE_DELTA_Rejects_Check/update.dq.TMR_INTEREST_RATE_DELTA_Rejects_Check.pset                                                                 text/x-abinitio-pset                               Export from Repository
+      1550 pset/dq.TMR_INTEREST_RATE_DELTA_Sensitivity_and_TotalVar_Check/input_dataset.dq.TMR_INTEREST_RATE_DELTA_Sensitivity_and_TotalVar_Check.pset                        text/x-abinitio-pset                               Export from Repository
+         0 pset/dq.TMR_INTEREST_RATE_DELTA_Sensitivity_and_TotalVar_Check/input_dataset_cardinality_test.dq.TMR_INTEREST_RATE_DELTA_Sensitivity_and_TotalVar_Check.pset       text/x-abinitio-pset                               Export from Repository
+      1175 pset/dq.TMR_INTEREST_RATE_DELTA_Sensitivity_and_TotalVar_Check/input_dataset_repartitioned.dq.TMR_INTEREST_RATE_DELTA_Sensitivity_and_TotalVar_Check.pset          text/x-abinitio-pset                               Export from Repository
+      1707 pset/dq.TMR_INTEREST_RATE_DELTA_Sensitivity_and_TotalVar_Check/prepare.dq.TMR_INTEREST_RATE_DELTA_Sensitivity_and_TotalVar_Check.pset                              text/x-abinitio-pset                               Export from Repository
+       320 pset/dq.TMR_INTEREST_RATE_DELTA_Sensitivity_and_TotalVar_Check/update.dq.TMR_INTEREST_RATE_DELTA_Sensitivity_and_TotalVar_Check.pset                               text/x-abinitio-pset                               Export from Repository
+      1246 pset/dq.TMR_INTEREST_RATE_DELTA_Verify_SLA/input_dataset.dq.TMR_INTEREST_RATE_DELTA_Verify_SLA.pset                                                                text/x-abinitio-pset                               Export from Repository
+         0 pset/dq.TMR_INTEREST_RATE_DELTA_Verify_SLA/input_dataset_cardinality_test.dq.TMR_INTEREST_RATE_DELTA_Verify_SLA.pset                                               text/x-abinitio-pset                               Export from Repository
+       816 pset/dq.TMR_INTEREST_RATE_DELTA_Verify_SLA/input_dataset_repartitioned.dq.TMR_INTEREST_RATE_DELTA_Verify_SLA.pset                                                  text/x-abinitio-pset                               Export from Repository
+       241 pset/dq.TMR_INTEREST_RATE_DELTA_Verify_SLA/input_provider.dq.TMR_INTEREST_RATE_DELTA_Verify_SLA.pset                                                               text/x-abinitio-pset                               Export from Repository
+      1328 pset/dq.TMR_INTEREST_RATE_DELTA_Verify_SLA/prepare.dq.TMR_INTEREST_RATE_DELTA_Verify_SLA.pset                                                                      text/x-abinitio-pset                               Export from Repository
+       280 pset/dq.TMR_INTEREST_RATE_DELTA_Verify_SLA/update.dq.TMR_INTEREST_RATE_DELTA_Verify_SLA.pset                                                                       text/x-abinitio-pset                               Export from Repository
+      1793 pset/dq.TMR_RISK_NOT_IN_VAR-RNIV_Audit_Check/input_dataset.dq.TMR_RISK_NOT_IN_VAR-RNIV_Audit_Check.pset                                                            text/x-abinitio-pset                               Export from Repository
+         0 pset/dq.TMR_RISK_NOT_IN_VAR-RNIV_Audit_Check/input_dataset_cardinality_test.dq.TMR_RISK_NOT_IN_VAR-RNIV_Audit_Check.pset                                           text/x-abinitio-pset                               Export from Repository
+      1400 pset/dq.TMR_RISK_NOT_IN_VAR-RNIV_Audit_Check/input_dataset_repartitioned.dq.TMR_RISK_NOT_IN_VAR-RNIV_Audit_Check.pset                                              text/x-abinitio-pset                               Export from Repository
+       204 pset/dq.TMR_RISK_NOT_IN_VAR-RNIV_Audit_Check/input_provider.dq.TMR_RISK_NOT_IN_VAR-RNIV_Audit_Check.pset                                                           text/x-abinitio-pset                               Export from Repository
+      1914 pset/dq.TMR_RISK_NOT_IN_VAR-RNIV_Audit_Check/prepare.dq.TMR_RISK_NOT_IN_VAR-RNIV_Audit_Check.pset                                                                  text/x-abinitio-pset                               Export from Repository
+       284 pset/dq.TMR_RISK_NOT_IN_VAR-RNIV_Audit_Check/update.dq.TMR_RISK_NOT_IN_VAR-RNIV_Audit_Check.pset                                                                   text/x-abinitio-pset                               Export from Repository
+      2148 pset/dq.TMR_RISK_NOT_IN_VAR-RNIV_Check_And_Verify_SLA/input_dataset.dq.TMR_RISK_NOT_IN_VAR-RNIV_Check_And_Verify_SLA.pset                                          text/x-abinitio-pset                               Export from Repository
+         0 pset/dq.TMR_RISK_NOT_IN_VAR-RNIV_Check_And_Verify_SLA/input_dataset_cardinality_test.dq.TMR_RISK_NOT_IN_VAR-RNIV_Check_And_Verify_SLA.pset                         text/x-abinitio-pset                               Export from Repository
+      1748 pset/dq.TMR_RISK_NOT_IN_VAR-RNIV_Check_And_Verify_SLA/input_dataset_repartitioned.dq.TMR_RISK_NOT_IN_VAR-RNIV_Check_And_Verify_SLA.pset                            text/x-abinitio-pset                               Export from Repository
+       211 pset/dq.TMR_RISK_NOT_IN_VAR-RNIV_Check_And_Verify_SLA/input_provider.dq.TMR_RISK_NOT_IN_VAR-RNIV_Check_And_Verify_SLA.pset                                         text/x-abinitio-pset                               Export from Repository
+      2271 pset/dq.TMR_RISK_NOT_IN_VAR-RNIV_Check_And_Verify_SLA/prepare.dq.TMR_RISK_NOT_IN_VAR-RNIV_Check_And_Verify_SLA.pset                                                text/x-abinitio-pset                               Export from Repository
+       302 pset/dq.TMR_RISK_NOT_IN_VAR-RNIV_Check_And_Verify_SLA/update.dq.TMR_RISK_NOT_IN_VAR-RNIV_Check_And_Verify_SLA.pset                                                 text/x-abinitio-pset                               Export from Repository
+      1732 pset/dq.TMR_RISK_NOT_IN_VAR-RNIV_Volatality_Check/input_dataset.dq.TMR_RISK_NOT_IN_VAR-RNIV_Volatality_Check.pset                                                  text/x-abinitio-pset                               Export from Repository
+         0 pset/dq.TMR_RISK_NOT_IN_VAR-RNIV_Volatality_Check/input_dataset_cardinality_test.dq.TMR_RISK_NOT_IN_VAR-RNIV_Volatality_Check.pset                                 text/x-abinitio-pset                               Export from Repository
+      1321 pset/dq.TMR_RISK_NOT_IN_VAR-RNIV_Volatality_Check/input_dataset_repartitioned.dq.TMR_RISK_NOT_IN_VAR-RNIV_Volatality_Check.pset                                    text/x-abinitio-pset                               Export from Repository
+       222 pset/dq.TMR_RISK_NOT_IN_VAR-RNIV_Volatality_Check/input_provider.dq.TMR_RISK_NOT_IN_VAR-RNIV_Volatality_Check.pset                                                 text/x-abinitio-pset                               Export from Repository
+      1840 pset/dq.TMR_RISK_NOT_IN_VAR-RNIV_Volatality_Check/prepare.dq.TMR_RISK_NOT_IN_VAR-RNIV_Volatality_Check.pset                                                        text/x-abinitio-pset                               Export from Repository
+       294 pset/dq.TMR_RISK_NOT_IN_VAR-RNIV_Volatality_Check/update.dq.TMR_RISK_NOT_IN_VAR-RNIV_Volatality_Check.pset                                                         text/x-abinitio-pset                               Export from Repository
+      1626 pset/dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Check/input_dataset.dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Check.pset                                                  text/x-abinitio-pset                               Export from Repository
+         0 pset/dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Check/input_dataset_cardinality_test.dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Check.pset                                 text/x-abinitio-pset                               Export from Repository
+      1212 pset/dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Check/input_dataset_repartitioned.dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Check.pset                                    text/x-abinitio-pset                               Export from Repository
+       225 pset/dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Check/input_provider.dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Check.pset                                                 text/x-abinitio-pset                               Export from Repository
+      1731 pset/dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Check/prepare.dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Check.pset                                                        text/x-abinitio-pset                               Export from Repository
+       294 pset/dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Check/update.dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Check.pset                                                         text/x-abinitio-pset                               Export from Repository
+      2564 pset/dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Quarterly_Check/input_dataset.dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Quarterly_Check.pset                              text/x-abinitio-pset                               Export from Repository
+         0 pset/dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Quarterly_Check/input_dataset_cardinality_test.dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Quarterly_Check.pset             text/x-abinitio-pset                               Export from Repository
+      2142 pset/dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Quarterly_Check/input_dataset_repartitioned.dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Quarterly_Check.pset                text/x-abinitio-pset                               Export from Repository
+       233 pset/dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Quarterly_Check/input_provider.dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Quarterly_Check.pset                             text/x-abinitio-pset                               Export from Repository
+      2671 pset/dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Quarterly_Check/prepare.dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Quarterly_Check.pset                                    text/x-abinitio-pset                               Export from Repository
+       314 pset/dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Quarterly_Check/update.dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Quarterly_Check.pset                                     text/x-abinitio-pset                               Export from Repository
+      1438 pset/dq.TMR_SM_CAPITAL_AMOUNT_Monthly_movement/input_dataset.dq.TMR_SM_CAPITAL_AMOUNT_Monthly_movement.pset                                                        text/x-abinitio-pset                               Export from Repository
+         0 pset/dq.TMR_SM_CAPITAL_AMOUNT_Monthly_movement/input_dataset_cardinality_test.dq.TMR_SM_CAPITAL_AMOUNT_Monthly_movement.pset                                       text/x-abinitio-pset                               Export from Repository
+      1015 pset/dq.TMR_SM_CAPITAL_AMOUNT_Monthly_movement/input_dataset_repartitioned.dq.TMR_SM_CAPITAL_AMOUNT_Monthly_movement.pset                                          text/x-abinitio-pset                               Export from Repository
+       234 pset/dq.TMR_SM_CAPITAL_AMOUNT_Monthly_movement/input_provider.dq.TMR_SM_CAPITAL_AMOUNT_Monthly_movement.pset                                                       text/x-abinitio-pset                               Export from Repository
+      1531 pset/dq.TMR_SM_CAPITAL_AMOUNT_Monthly_movement/prepare.dq.TMR_SM_CAPITAL_AMOUNT_Monthly_movement.pset                                                              text/x-abinitio-pset                               Export from Repository
+       288 pset/dq.TMR_SM_CAPITAL_AMOUNT_Monthly_movement/update.dq.TMR_SM_CAPITAL_AMOUNT_Monthly_movement.pset                                                               text/x-abinitio-pset                               Export from Repository
+      1173 pset/dq.TMR_SM_CAPITAL_AMOUNT_Verify_SLA/input_dataset.dq.TMR_SM_CAPITAL_AMOUNT_Verify_SLA.pset                                                                    text/x-abinitio-pset                               Export from Repository
+         0 pset/dq.TMR_SM_CAPITAL_AMOUNT_Verify_SLA/input_dataset_cardinality_test.dq.TMR_SM_CAPITAL_AMOUNT_Verify_SLA.pset                                                   text/x-abinitio-pset                               Export from Repository
+       758 pset/dq.TMR_SM_CAPITAL_AMOUNT_Verify_SLA/input_dataset_repartitioned.dq.TMR_SM_CAPITAL_AMOUNT_Verify_SLA.pset                                                      text/x-abinitio-pset                               Export from Repository
+       226 pset/dq.TMR_SM_CAPITAL_AMOUNT_Verify_SLA/input_provider.dq.TMR_SM_CAPITAL_AMOUNT_Verify_SLA.pset                                                                   text/x-abinitio-pset                               Export from Repository
+      1268 pset/dq.TMR_SM_CAPITAL_AMOUNT_Verify_SLA/prepare.dq.TMR_SM_CAPITAL_AMOUNT_Verify_SLA.pset                                                                          text/x-abinitio-pset                               Export from Repository
+       276 pset/dq.TMR_SM_CAPITAL_AMOUNT_Verify_SLA/update.dq.TMR_SM_CAPITAL_AMOUNT_Verify_SLA.pset                                                                           text/x-abinitio-pset                               Export from Repository
+      1709 pset/dq.TMR_VEGA_Rejects_Check/input_dataset.dq.TMR_VEGA_Rejects_Check.pset                                                                                        text/x-abinitio-pset                               Export from Repository
+         0 pset/dq.TMR_VEGA_Rejects_Check/input_dataset_cardinality_test.dq.TMR_VEGA_Rejects_Check.pset                                                                       text/x-abinitio-pset                               Export from Repository
+      1307 pset/dq.TMR_VEGA_Rejects_Check/input_dataset_repartitioned.dq.TMR_VEGA_Rejects_Check.pset                                                                          text/x-abinitio-pset                               Export from Repository
+       213 pset/dq.TMR_VEGA_Rejects_Check/input_provider.dq.TMR_VEGA_Rejects_Check.pset                                                                                       text/x-abinitio-pset                               Export from Repository
+      1807 pset/dq.TMR_VEGA_Rejects_Check/prepare.dq.TMR_VEGA_Rejects_Check.pset                                                                                              text/x-abinitio-pset                               Export from Repository
+       256 pset/dq.TMR_VEGA_Rejects_Check/update.dq.TMR_VEGA_Rejects_Check.pset                                                                                               text/x-abinitio-pset                               Export from Repository
+      1520 pset/dq.TMR_VEGA_Sensitivity_and_TotalVar_Check/input_dataset.dq.TMR_VEGA_Sensitivity_and_TotalVar_Check.pset                                                      text/x-abinitio-pset                               Export from Repository
+         0 pset/dq.TMR_VEGA_Sensitivity_and_TotalVar_Check/input_dataset_cardinality_test.dq.TMR_VEGA_Sensitivity_and_TotalVar_Check.pset                                     text/x-abinitio-pset                               Export from Repository
+      1145 pset/dq.TMR_VEGA_Sensitivity_and_TotalVar_Check/input_dataset_repartitioned.dq.TMR_VEGA_Sensitivity_and_TotalVar_Check.pset                                        text/x-abinitio-pset                               Export from Repository
+      1662 pset/dq.TMR_VEGA_Sensitivity_and_TotalVar_Check/prepare.dq.TMR_VEGA_Sensitivity_and_TotalVar_Check.pset                                                            text/x-abinitio-pset                               Export from Repository
+       290 pset/dq.TMR_VEGA_Sensitivity_and_TotalVar_Check/update.dq.TMR_VEGA_Sensitivity_and_TotalVar_Check.pset                                                             text/x-abinitio-pset                               Export from Repository
+      1201 pset/dq.TMR_VEGA_Verify_SLA/input_dataset.dq.TMR_VEGA_Verify_SLA.pset                                                                                              text/x-abinitio-pset                               Export from Repository
+         0 pset/dq.TMR_VEGA_Verify_SLA/input_dataset_cardinality_test.dq.TMR_VEGA_Verify_SLA.pset                                                                             text/x-abinitio-pset                               Export from Repository
+       786 pset/dq.TMR_VEGA_Verify_SLA/input_dataset_repartitioned.dq.TMR_VEGA_Verify_SLA.pset                                                                                text/x-abinitio-pset                               Export from Repository
+       226 pset/dq.TMR_VEGA_Verify_SLA/input_provider.dq.TMR_VEGA_Verify_SLA.pset                                                                                             text/x-abinitio-pset                               Export from Repository
+      1283 pset/dq.TMR_VEGA_Verify_SLA/prepare.dq.TMR_VEGA_Verify_SLA.pset                                                                                                    text/x-abinitio-pset                               Export from Repository
+       250 pset/dq.TMR_VEGA_Verify_SLA/update.dq.TMR_VEGA_Verify_SLA.pset                                                                                                     text/x-abinitio-pset                               Export from Repository
+      1561 pset/dq.fileinput-test/input_dataset.dq.fileinput-test.pset                                                                                                        text/x-abinitio-pset                               Export from Repository
+         0 pset/dq.fileinput-test/input_dataset_cardinality_test.dq.fileinput-test.pset                                                                                       text/x-abinitio-pset                               Export from Repository
+      1106 pset/dq.fileinput-test/input_dataset_repartitioned.dq.fileinput-test.pset                                                                                          text/x-abinitio-pset                               Export from Repository
+      1598 pset/dq.fileinput-test/prepare.dq.fileinput-test.pset                                                                                                              text/x-abinitio-pset                               Export from Repository
+       240 pset/dq.fileinput-test/update.dq.fileinput-test.pset                                                                                                               text/x-abinitio-pset                               Export from Repository
+      1741 pset/dq.sample/input_dataset.dq.sample.pset                                                                                                                        text/x-abinitio-pset                               Export from Repository
+         0 pset/dq.sample/input_dataset_cardinality_test.dq.sample.pset                                                                                                       text/x-abinitio-pset                               Export from Repository
+      1341 pset/dq.sample/input_dataset_repartitioned.dq.sample.pset                                                                                                          text/x-abinitio-pset                               Export from Repository
+       211 pset/dq.sample/input_provider.dq.sample.pset                                                                                                                       text/x-abinitio-pset                               Export from Repository
+      1860 pset/dq.sample/prepare.dq.sample.pset                                                                                                                              text/x-abinitio-pset                               Export from Repository
+     13576 pset/dq_front_end_dq.APS116_SCALING_FACTOR_RNIV_Quarterly_Check.pset                                                                                               text/x-abinitio-pset                               Export from Repository
+     12924 pset/dq_front_end_dq.APS116_SCALING_FACTOR_VAR_SVAR_Check.pset                                                                                                     text/x-abinitio-pset                               Export from Repository
+     14928 pset/dq_front_end_dq.APS116_SCALING_FACTOR_Verify_SLA_And_Scalar_Factor_Check.pset                                                                                 text/x-abinitio-pset                               Export from Repository
+     13712 pset/dq_front_end_dq.TMR_CREDIT_SPREAD_DELTA_Rejects_Check.pset                                                                                                    text/x-abinitio-pset                               Export from Repository
+     14031 pset/dq_front_end_dq.TMR_CREDIT_SPREAD_DELTA_Sensitivity_and_TotalVar_Check.pset                                                                                   text/x-abinitio-pset                               Export from Repository
+     13299 pset/dq_front_end_dq.TMR_CREDIT_SPREAD_DELTA_Verify_SLA.pset                                                                                                       text/x-abinitio-pset                               Export from Repository
+     13786 pset/dq_front_end_dq.TMR_INTEREST_RATE_DELTA_Rejects_Check.pset                                                                                                    text/x-abinitio-pset                               Export from Repository
+     14031 pset/dq_front_end_dq.TMR_INTEREST_RATE_DELTA_Sensitivity_and_TotalVar_Check.pset                                                                                   text/x-abinitio-pset                               Export from Repository
+     13299 pset/dq_front_end_dq.TMR_INTEREST_RATE_DELTA_Verify_SLA.pset                                                                                                       text/x-abinitio-pset                               Export from Repository
+     13695 pset/dq_front_end_dq.TMR_RISK_NOT_IN_VAR-RNIV_Audit_Check.pset                                                                                                     text/x-abinitio-pset                               Export from Repository
+     14104 pset/dq_front_end_dq.TMR_RISK_NOT_IN_VAR-RNIV_Check_And_Verify_SLA.pset                                                                                            text/x-abinitio-pset                               Export from Repository
+     13664 pset/dq_front_end_dq.TMR_RISK_NOT_IN_VAR-RNIV_Volatality_Check.pset                                                                                                text/x-abinitio-pset                               Export from Repository
+     13558 pset/dq_front_end_dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Check.pset                                                                                                text/x-abinitio-pset                               Export from Repository
+     14562 pset/dq_front_end_dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Quarterly_Check.pset                                                                                      text/x-abinitio-pset                               Export from Repository
+     13352 pset/dq_front_end_dq.TMR_SM_CAPITAL_AMOUNT_Monthly_movement.pset                                                                                                   text/x-abinitio-pset                               Export from Repository
+     13057 pset/dq_front_end_dq.TMR_SM_CAPITAL_AMOUNT_Verify_SLA.pset                                                                                                         text/x-abinitio-pset                               Export from Repository
+     13592 pset/dq_front_end_dq.TMR_VEGA_Rejects_Check.pset                                                                                                                   text/x-abinitio-pset                               Export from Repository
+     13866 pset/dq_front_end_dq.TMR_VEGA_Sensitivity_and_TotalVar_Check.pset                                                                                                  text/x-abinitio-pset                               Export from Repository
+     13179 pset/dq_front_end_dq.TMR_VEGA_Verify_SLA.pset                                                                                                                      text/x-abinitio-pset                               Export from Repository
+     13762 pset/dq_front_end_dq.fileinput-test.pset                                                                                                                           text/x-abinitio-pset                               Export from Repository
+     12581 pset/dq_front_end_dq.sample.pset                                                                                                                                   text/x-abinitio-pset                               Export from Repository
+      2177 pset/inputs/rex_app/sql.etl_audit_files.pset                                                                                                                       text/x-abinitio-pset                               Export from Repository
+      1749 pset/inputs/rex_app/sql.etl_audit_files_TMR_CREDIT_SPREAD_DELTA.pset                                                                                               text/x-abinitio-pset                               Export from Repository
+      1923 pset/inputs/rex_app/sql.etl_audit_files_TMR_INTEREST_RATE_DELTA.pset                                                                                               text/x-abinitio-pset                               Export from Repository
+      1734 pset/inputs/rex_app/sql.etl_audit_files_TMR_VEGA.pset                                                                                                              text/x-abinitio-pset                               Export from Repository
+      2193 pset/inputs/rex_app/sql.limit_utilisation_TMR_Credit_Spread_Delta_Verify_SLA.pset                                                                                  text/x-abinitio-pset                               Export from Repository
+      2311 pset/inputs/rex_app/sql.limit_utilisation_TMR_Interest_Rate_Delta_Verify_SLA.pset                                                                                  text/x-abinitio-pset                               Export from Repository
+      2258 pset/inputs/rex_app/sql.limit_utilisation_TMR_Vega_Verify_SLA.pset                                                                                                 text/x-abinitio-pset                               Export from Repository
+      1659 pset/inputs/rex_app/sql.map_var_scalar_VAR_SVAR_scale_factor_check.pset                                                                                            text/x-abinitio-pset                               Export from Repository
+      2367 pset/inputs/rex_app/sql.map_var_scalar_quarterly_scalar_factor_check.pset                                                                                          text/x-abinitio-pset                               Export from Repository
+      3263 pset/inputs/rex_app/sql.map_var_scalar_quarterly_scale_facor_RNIV_check.pset                                                                                       text/x-abinitio-pset                               Export from Repository
+      2482 pset/inputs/rex_app/sql.map_var_scalar_verify_SLA_And_Scalar_Factor_Check.pset                                                                                     text/x-abinitio-pset                               Export from Repository
+      4928 pset/inputs/rex_app/sql.mods_spec_risk_credit_quarterly_rating_check.pset                                                                                          text/x-abinitio-pset                               Export from Repository
+      3192 pset/inputs/rex_app/sql.mods_spec_risk_credit_rating_extract.pset                                                                                                  text/x-abinitio-pset                               Export from Repository
+      2678 pset/inputs/rex_app/sql.mods_spec_risk_table_1_cba_capital_amount_agg.pset                                                                                         text/x-abinitio-pset                               Export from Repository
+      1228 pset/inputs/rex_app/sql.mods_spec_risk_table_1_cba_verify_SLA.pset                                                                                                 text/x-abinitio-pset                               Export from Repository
+      2610 pset/inputs/rex_app/sql.var_mre_eod_addon_rniv.pset                                                                                                                text/x-abinitio-pset                               Export from Repository
+      1568 pset/inputs/rex_app/sql.var_mre_eod_addon_rniv_backup.pset                                                                                                         text/x-abinitio-pset                               Export from Repository
+      4059 pset/inputs/rex_app/sql.var_mre_eod_addon_rniv_volatality.pset                                                                                                     text/x-abinitio-pset                               Export from Repository
+       361 pset/unload_metadata_hub_rex_dq_unload-metadata-hub.pset                                                                                                           text/x-abinitio-pset                               Export from Repository
+         0 xfr/auto-validate-dq.TMR_RISK_NOT_IN_VAR-RNIV_Audit_Check.xfr                                                                                                      text/x-abinitio-xfr                                Export from Repository
+         0 xfr/auto-validate-dq.TMR_RISK_NOT_IN_VAR-RNIV_Check_And_Verify_SLA.xfr                                                                                             text/x-abinitio-xfr                                Export from Repository
+         0 xfr/auto-validate-dq.TMR_RISK_NOT_IN_VAR-RNIV_Volatality_Check.xfr                                                                                                 text/x-abinitio-xfr                                Export from Repository
+         0 xfr/auto-validate-dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Check.xfr                                                                                                 text/x-abinitio-xfr                                Export from Repository
+         0 xfr/auto-validate-dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Quarterly_Check.xfr                                                                                       text/x-abinitio-xfr                                Export from Repository
+         0 xfr/auto-validate-dq.TMR_SM_CAPITAL_AMOUNT_Verify_SLA.xfr                                                                                                          text/x-abinitio-xfr                                Export from Repository
+         0 xfr/auto-validate-dq.TMR_SM_CAPITAL_AMOUNT_Volatality_Check.xfr                                                                                                    text/x-abinitio-xfr                                Export from Repository
+    165551 xfr/auto-validate-dq.sample.xfr                                                                                                                                    text/x-abinitio-xfr                                Export from Repository
+       513 xfr/dq_common_functions.xfr                                                                                                                                        text/x-abinitio-xfr                                Export from Repository
+         0 xfr/transform-dq.TMR_RISK_NOT_IN_VAR-RNIV_Audit_Check.xfr                                                                                                          text/x-abinitio-xfr                                Export from Repository
+         0 xfr/transform-dq.TMR_RISK_NOT_IN_VAR-RNIV_Check_And_Verify_SLA.xfr                                                                                                 text/x-abinitio-xfr                                Export from Repository
+         0 xfr/transform-dq.TMR_RISK_NOT_IN_VAR-RNIV_Volatality_Check.xfr                                                                                                     text/x-abinitio-xfr                                Export from Repository
+         0 xfr/transform-dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Check.xfr                                                                                                     text/x-abinitio-xfr                                Export from Repository
+         0 xfr/transform-dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Quarterly_Check.xfr                                                                                           text/x-abinitio-xfr                                Export from Repository
+         0 xfr/transform-dq.TMR_SM_CAPITAL_AMOUNT_Verify_SLA.xfr                                                                                                              text/x-abinitio-xfr                                Export from Repository
+         0 xfr/transform-dq.TMR_SM_CAPITAL_AMOUNT_Volatality_Check.xfr                                                                                                        text/x-abinitio-xfr                                Export from Repository
+         0 xfr/transform-dq.sample.xfr                                                                                                                                        text/x-abinitio-xfr                                Export from Repository
+    288899 xfr/validate-DQ.TMR_VEGA_Verify_SLA_And_Rejects.xfr                                                                                                                text/x-abinitio-xfr                                Export from Repository
+    282899 xfr/validate-dq.APS116_SCALING_FACTOR_RNIV_Quarterly_Check.xfr                                                                                                     text/x-abinitio-xfr                                Export from Repository
+    282882 xfr/validate-dq.APS116_SCALING_FACTOR_VAR_SVAR_Check.xfr                                                                                                           text/x-abinitio-xfr                                Export from Repository
+    285772 xfr/validate-dq.APS116_SCALING_FACTOR_Verify_SLA_And_Scalar_Factor_Check.xfr                                                                                       text/x-abinitio-xfr                                Export from Repository
+    287765 xfr/validate-dq.TMR_CREDIT_SPREAD_DELTA_Rejects_Check.xfr                                                                                                          text/x-abinitio-xfr                                Export from Repository
+    288060 xfr/validate-dq.TMR_CREDIT_SPREAD_DELTA_Sensitivity_and_TotalVar_Check.xfr                                                                                         text/x-abinitio-xfr                                Export from Repository
+    286462 xfr/validate-dq.TMR_CREDIT_SPREAD_DELTA_Verify_SLA.xfr                                                                                                             text/x-abinitio-xfr                                Export from Repository
+    289531 xfr/validate-dq.TMR_INTEREST_RATE_DELTA_Rejects_Check.xfr                                                                                                          text/x-abinitio-xfr                                Export from Repository
+    288078 xfr/validate-dq.TMR_INTEREST_RATE_DELTA_Sensitivity_and_TotalVar_Check.xfr                                                                                         text/x-abinitio-xfr                                Export from Repository
+    288231 xfr/validate-dq.TMR_INTEREST_RATE_DELTA_Verify_SLA.xfr                                                                                                             text/x-abinitio-xfr                                Export from Repository
+    284445 xfr/validate-dq.TMR_RISK_NOT_IN_VAR-RNIV_Audit_Check.xfr                                                                                                           text/x-abinitio-xfr                                Export from Repository
+    285106 xfr/validate-dq.TMR_RISK_NOT_IN_VAR-RNIV_Check_And_Verify_SLA.xfr                                                                                                  text/x-abinitio-xfr                                Export from Repository
+    284520 xfr/validate-dq.TMR_RISK_NOT_IN_VAR-RNIV_Volatality_Check.xfr                                                                                                      text/x-abinitio-xfr                                Export from Repository
+    285618 xfr/validate-dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Check.xfr                                                                                                      text/x-abinitio-xfr                                Export from Repository
+    289018 xfr/validate-dq.TMR_SM_CAPITAL_AMOUNT_Credit_Rating_Quarterly_Check.xfr                                                                                            text/x-abinitio-xfr                                Export from Repository
+    285201 xfr/validate-dq.TMR_SM_CAPITAL_AMOUNT_Monthly_movement.xfr                                                                                                         text/x-abinitio-xfr                                Export from Repository
+    285129 xfr/validate-dq.TMR_SM_CAPITAL_AMOUNT_Verify_SLA.xfr                                                                                                               text/x-abinitio-xfr                                Export from Repository
+    287629 xfr/validate-dq.TMR_VEGA_Rejects_Check.xfr                                                                                                                         text/x-abinitio-xfr                                Export from Repository
+    288010 xfr/validate-dq.TMR_VEGA_Sensitivity_and_TotalVar_Check.xfr                                                                                                        text/x-abinitio-xfr                                Export from Repository
+    286408 xfr/validate-dq.TMR_VEGA_Verify_SLA.xfr                                                                                                                            text/x-abinitio-xfr                                Export from Repository
+    286294 xfr/validate-dq.fileinput-test.xfr                                                                                                                                 text/x-abinitio-xfr                                Export from Repository
+    178857 xfr/validate-dq.sample.xfr                                                                                                                                         text/x-abinitio-xfr                                Export from Repository
+================================================================
+Warning: No path specified for common project "Environment" in sandbox parameters file "/ab/sand/rex_coop_st/REX_ST/IBM/Rex/Private/rex_dq/.sandbox.pset"
 
+================================================================
+================================================================
+Warning: No path specified for common project "REX_DQ" in sandbox parameters file "/ab/sand/rex_coop_st/REX_ST/IBM/Rex/Private/rex_dq/.sandbox.pset"
 
+================================================================
+  23960609 Bytes exported
+       513 xfr/test.xfr                                   text/x-abinitio-xfr                           Export from Repository
+================================================================
+Warning: No path specified for common project "Environment" in sandbox parameters file "/ab/sand/rex_coop_st/REX_ST/IBM/Rex/Public/REX_DQ/.sandbox.pset"
 
+================================================================
+================================================================
+Warning: No path specified for common project "dataquality" in sandbox parameters file "/ab/sand/rex_coop_st/REX_ST/IBM/Rex/Public/REX_DQ/.sandbox.pset"
 
-sqlplus -S #{DB_USER}/#{DB_PASSWORD}@#{DB_SID} @${script_file} -bind "oracle_log_content=${oracle_log_content}" -bind "abinitio_log_content=${abinitio_log_content}" -bind "abinitio_commands_log_content=${abinitio_commands_log_contents}"
+================================================================
+================================================================
+Warning: No path specified for common project "REX_TEMPLATES" in sandbox parameters file "/ab/sand/rex_coop_st/REX_ST/IBM/Rex/Public/REX_DQ/.sandbox.pset"
 
+================================================================
+================================================================
+Warning: No path specified for common project "REX" in sandbox parameters file "/ab/sand/rex_coop_st/REX_ST/IBM/Rex/Public/REX_DQ/.sandbox.pset"
 
-If you want to modify your Korn Shell (ksh) script to prevent the "String literal is too long" error when inserting long strings into Oracle, you can use the following approach:
-
-1. **Use Bind Variables**: Instead of constructing the SQL statement with string concatenation, use bind variables. Bind variables are placeholders in your SQL statement that are later filled in with values. They are more efficient and eliminate the "String literal is too long" issue.
-
-Here's a modified version of your script with bind variables:
-
-```ksh
-#!/bin/ksh
-
-echo "#{Environment}" | . ${HOME}/.profile
-
-deploy_filepath="#{deploy_or_rollback_dir}/deploy/#{unique_release_number}/#{unique_release_number}_deploy.txt"
-export deploy_filepath
-
-if [ -e "$deploy_filepath" ]; then
-
-    rex
-
-    export release_timestamp=$(echo #{unique_release_number})
-
-    # Calculate the insert timestamp
-    current_day=$(date +"%d")
-    current_month=$(date +"%b" | tr 'a-z' 'A-Z')
-    current_year=$(date +"%y")
-    current_time=$(date +"%I:%M:%S")
-    nanoseconds=$(date +"%N" | cut -c1-9)  # Get only the first 9 digits of nanoseconds
-    current_am_pm=$(date +"%p")
-
-    # Combine components to get the desired timestamp format
-    timestamp="${current_day}/${current_month}/${current_year} ${current_time}.${nanoseconds} ${current_am_pm}"
-
-    runid="$(m_db unload ${AI_DB}/rex_app.dbc -column_delimiter '' -select "select max(runid) from REX_APP.RELEASE_LOGS")"
-    export runid
-    current_runid=$(echo "$runid" | sed -E '/^$/d')
-    export current_runid
-    export deploy_runid=$(($current_runid+1))
-    echo $runid is the runid
-    echo $current_runid is the current_runid
-    echo $deploy_runid is the deploy_runid
-    echo " -----------------------------------"
-
-    deploy_build_name=#{build_name}
-    echo "$deploy_build_name is the deploy buildname"
-    deploy_build_number=#{build_number}
-    echo "$deploy_build_number is the deploy buildnumber"
-    release_name=#{Octopus.Release.Number}
-    echo "$release_name is the Release Name"
-
-    # Check for existence and content of oracle_log_content
-    oracle_log_content_file="#{deploy_or_rollback_dir}/deploy/#{unique_release_number}/sql_deploy_log_log.txt"
-    if [ -f "$oracle_log_content_file" ]; then
-        oracle_log_content=$(cat "$oracle_log_content_file")
-    else
-        oracle_log_content='NA'
-    fi
-
-    # Check for existence and content of abinitio_log_content
-    abinitio_log_content_file="#{deploy_or_rollback_dir}/deploy/#{unique_release_number}/abinitio_deploy_code_checkout_log.txt"
-    if [ -f "$abinitio_log_content_file" ]; then
-        abinitio_log_content=$(cat "$abinitio_log_content_file")
-    else
-        abinitio_log_content='NA'
-    fi
-
-    # Check for existence and content of abinitio_commands_log_contents
-    abinitio_commands_log_file="#{deploy_or_rollback_dir}/deploy/#{unique_release_number}/abinitio_commands_log.txt"
-    if [ -f "$abinitio_commands_log_file" ]; then
-        abinitio_commands_log_contents=$(cat "$abinitio_commands_log_file")
-    else
-        abinitio_commands_log_contents='NA'
-    fi
-
-    # Prepare the SQL*Plus input script
-    script_file=$(mktemp)
-    echo "SET SERVEROUTPUT ON" >> ${script_file}
-    echo "SET DEFINE OFF" >> ${script_file}
-    echo "DECLARE" >> ${script_file}
-    echo "    v_oracle_log_content CLOB := :oracle_log_content;" >> ${script_file}
-    echo "    v_abinitio_log_content CLOB := :abinitio_log_content;" >> ${script_file}
-    echo "    v_abinitio_commands_log_content CLOB := :abinitio_commands_log_content;" >> ${script_file}
-    echo "BEGIN" >> ${script_file}
-    echo "    v_oracle_log_content := 'Oracle log : ' || v_oracle_log_content;" >> ${script_file}
-    echo "    v_abinitio_log_content := 'Abinitio log : ' || v_abinitio_log_content;" >> ${script_file}
-    echo "    v_abinitio_commands_log_content := 'Abinitio Commands log : ' || v_abinitio_commands_log_content;" >> ${script_file}
-    
-    # Conditionally include the UPDATE statement if param value is 1
-    if [[ $current_runid -ge 1 ]]; then
-        echo "    UPDATE rex_app.RELEASE_LOGS set current_build=0 where RUNID=$current_runid;" >> ${script_file}
-    fi
-    
-    echo "    INSERT INTO rex_app.RELEASE_LOGS (RUNID,RELEASE_NAME,BUILD_NAME,BUILD_NUMBER,CURRENT_BUILD,INSERTED_TS,USER_LONG_NAME,LOGS_ORACLE,LOGS_ABINITIO_CHECKOUT,LOGS_ABINITIO_COMMANDS) values('$deploy_runid','$release_name','$deploy_build_name',$deploy_build_number,1,'$timestamp','Rose',v_oracle_log_content,v_abinitio_log_content,v_abinitio_commands_log_content);" >> ${script_file}
-    echo "    COMMIT;" >> ${script_file}
-    echo "    DBMS_OUTPUT.PUT_LINE('Insert successful');" >> ${script_file}
-    echo "EXCEPTION" >> ${script_file}
-    echo "    WHEN OTHERS THEN" >> ${script_file}
-    echo "        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);" >> ${script_file}
-    echo "        ROLLBACK;" >> ${script_file}
-    echo "END;" >> ${script_file}
-    echo "/" >> ${script_file}
-    echo "EXIT;" >> ${script_file}
-
-    echo "Thes script file is --------------------------------------------------------------------------------------------------"
-    #cat ${script_file}
-    # Run SQL*Plus with the generated script
-    sqlplus -S #{DB_USER}/#{DB_PASSWORD}@#{DB_SID} @${script_file} -bind "oracle_log_content=${oracle_log_content}" -bind "abinitio_log_content=${abinitio_log_content}" -bind "abinitio_commands_log_content=${abinitio_commands_log_contents}" >> /home/acoe_rex_app_devst/output_error.txt
-
-    echo "Insert utility command sqlplus -S #{DB_USER}/#{DB_PASSWORD}@#{DB_SID}"
-    echo "Thes script file is --------------------------------------------------------------------------------------------------"
-    cp ${script_file} /home/acoe_rex_app_devst/script_file.txt
-    # Clean up the temporary script file
-    #rm ${script_file}
-
-else
-    echo "Deploy file not found. No deployment actions performed."
-fi
-```
-
-In this modified script, we use bind variables (e.g., `:oracle_log_content`, `:abinitio_log_content`, `:abinitio_commands_log_content`) to pass data to the SQL statements. Bind variables automatically handle large strings, and you don't need to worry about the "String literal is too long" error. The data from your variables is directly inserted into the CLOB
+================================================================
+       513 Bytes exported}');
+    dbms_lob.append(v_abinitio_commands_log_content,'  '||q'{}');
+    UPDATE rex_app.RELEASE_LOGS set current_build=0 where RUNID= 1;
+    INSERT INTO rex_app.RELEASE_LOGS (RUNID,RELEASE_NAME,BUILD_NAME,BUILD_NUMBER,CURRENT_BUILD,INSERTED_TS,USER_LONG_NAME,LOGS_ORACLE,LOGS_ABINITIO_CHECKOUT,LOGS_ABINITIO_COMMANDS) values('2','570.0.9','585-rex-13-OCT-2023',585,1,'15/OCT/23 07:17:51.256712751 AM','Rose',v_oracle_log_content,v_abinitio_log_content,v_abinitio_commands_log_content);
+    COMMIT;
+    DBMS_OUTPUT.PUT_LINE('Insert successful');
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+        ROLLBACK;
+END;
+/
+EXIT;
