@@ -1,3 +1,12 @@
+ dbms_lob.append(v_abinitio_log_content,'  '||q'{      3583 appconf/t.frtb_mx_eod_jump_default.appconf                                                                application/x-abinitio-application-configuration   Update File
+                                                 *
+ERROR at line 10:
+ORA-06550: line 10, column 50:
+PLS-00172: string literal too long
+
+
+
+
 sqlplus -S #{DB_USER}/#{DB_PASSWORD}@#{DB_SID} @${script_file} -bind "oracle_log_content=${oracle_log_content}" -bind "abinitio_log_content=${abinitio_log_content}" -bind "abinitio_commands_log_content=${abinitio_commands_log_contents}"
 
 
