@@ -1,0 +1,118 @@
+If you want to modify your Korn Shell (ksh) script to prevent the "String literal is too long" error when inserting long strings into Oracle, you can use the following approach:
+
+1. **Use Bind Variables**: Instead of constructing the SQL statement with string concatenation, use bind variables. Bind variables are placeholders in your SQL statement that are later filled in with values. They are more efficient and eliminate the "String literal is too long" issue.
+
+Here's a modified version of your script with bind variables:
+
+```ksh
+#!/bin/ksh
+
+echo "#{Environment}" | . ${HOME}/.profile
+
+deploy_filepath="#{deploy_or_rollback_dir}/deploy/#{unique_release_number}/#{unique_release_number}_deploy.txt"
+export deploy_filepath
+
+if [ -e "$deploy_filepath" ]; then
+
+    rex
+
+    export release_timestamp=$(echo #{unique_release_number})
+
+    # Calculate the insert timestamp
+    current_day=$(date +"%d")
+    current_month=$(date +"%b" | tr 'a-z' 'A-Z')
+    current_year=$(date +"%y")
+    current_time=$(date +"%I:%M:%S")
+    nanoseconds=$(date +"%N" | cut -c1-9)  # Get only the first 9 digits of nanoseconds
+    current_am_pm=$(date +"%p")
+
+    # Combine components to get the desired timestamp format
+    timestamp="${current_day}/${current_month}/${current_year} ${current_time}.${nanoseconds} ${current_am_pm}"
+
+    runid="$(m_db unload ${AI_DB}/rex_app.dbc -column_delimiter '' -select "select max(runid) from REX_APP.RELEASE_LOGS")"
+    export runid
+    current_runid=$(echo "$runid" | sed -E '/^$/d')
+    export current_runid
+    export deploy_runid=$(($current_runid+1))
+    echo $runid is the runid
+    echo $current_runid is the current_runid
+    echo $deploy_runid is the deploy_runid
+    echo " -----------------------------------"
+
+    deploy_build_name=#{build_name}
+    echo "$deploy_build_name is the deploy buildname"
+    deploy_build_number=#{build_number}
+    echo "$deploy_build_number is the deploy buildnumber"
+    release_name=#{Octopus.Release.Number}
+    echo "$release_name is the Release Name"
+
+    # Check for existence and content of oracle_log_content
+    oracle_log_content_file="#{deploy_or_rollback_dir}/deploy/#{unique_release_number}/sql_deploy_log_log.txt"
+    if [ -f "$oracle_log_content_file" ]; then
+        oracle_log_content=$(cat "$oracle_log_content_file")
+    else
+        oracle_log_content='NA'
+    fi
+
+    # Check for existence and content of abinitio_log_content
+    abinitio_log_content_file="#{deploy_or_rollback_dir}/deploy/#{unique_release_number}/abinitio_deploy_code_checkout_log.txt"
+    if [ -f "$abinitio_log_content_file" ]; then
+        abinitio_log_content=$(cat "$abinitio_log_content_file")
+    else
+        abinitio_log_content='NA'
+    fi
+
+    # Check for existence and content of abinitio_commands_log_contents
+    abinitio_commands_log_file="#{deploy_or_rollback_dir}/deploy/#{unique_release_number}/abinitio_commands_log.txt"
+    if [ -f "$abinitio_commands_log_file" ]; then
+        abinitio_commands_log_contents=$(cat "$abinitio_commands_log_file")
+    else
+        abinitio_commands_log_contents='NA'
+    fi
+
+    # Prepare the SQL*Plus input script
+    script_file=$(mktemp)
+    echo "SET SERVEROUTPUT ON" >> ${script_file}
+    echo "SET DEFINE OFF" >> ${script_file}
+    echo "DECLARE" >> ${script_file}
+    echo "    v_oracle_log_content CLOB := :oracle_log_content;" >> ${script_file}
+    echo "    v_abinitio_log_content CLOB := :abinitio_log_content;" >> ${script_file}
+    echo "    v_abinitio_commands_log_content CLOB := :abinitio_commands_log_content;" >> ${script_file}
+    echo "BEGIN" >> ${script_file}
+    echo "    v_oracle_log_content := 'Oracle log : ' || v_oracle_log_content;" >> ${script_file}
+    echo "    v_abinitio_log_content := 'Abinitio log : ' || v_abinitio_log_content;" >> ${script_file}
+    echo "    v_abinitio_commands_log_content := 'Abinitio Commands log : ' || v_abinitio_commands_log_content;" >> ${script_file}
+    
+    # Conditionally include the UPDATE statement if param value is 1
+    if [[ $current_runid -ge 1 ]]; then
+        echo "    UPDATE rex_app.RELEASE_LOGS set current_build=0 where RUNID=$current_runid;" >> ${script_file}
+    fi
+    
+    echo "    INSERT INTO rex_app.RELEASE_LOGS (RUNID,RELEASE_NAME,BUILD_NAME,BUILD_NUMBER,CURRENT_BUILD,INSERTED_TS,USER_LONG_NAME,LOGS_ORACLE,LOGS_ABINITIO_CHECKOUT,LOGS_ABINITIO_COMMANDS) values('$deploy_runid','$release_name','$deploy_build_name',$deploy_build_number,1,'$timestamp','Rose',v_oracle_log_content,v_abinitio_log_content,v_abinitio_commands_log_content);" >> ${script_file}
+    echo "    COMMIT;" >> ${script_file}
+    echo "    DBMS_OUTPUT.PUT_LINE('Insert successful');" >> ${script_file}
+    echo "EXCEPTION" >> ${script_file}
+    echo "    WHEN OTHERS THEN" >> ${script_file}
+    echo "        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);" >> ${script_file}
+    echo "        ROLLBACK;" >> ${script_file}
+    echo "END;" >> ${script_file}
+    echo "/" >> ${script_file}
+    echo "EXIT;" >> ${script_file}
+
+    echo "Thes script file is --------------------------------------------------------------------------------------------------"
+    #cat ${script_file}
+    # Run SQL*Plus with the generated script
+    sqlplus -S #{DB_USER}/#{DB_PASSWORD}@#{DB_SID} @${script_file} -bind "oracle_log_content=${oracle_log_content}" -bind "abinitio_log_content=${abinitio_log_content}" -bind "abinitio_commands_log_content=${abinitio_commands_log_contents}" >> /home/acoe_rex_app_devst/output_error.txt
+
+    echo "Insert utility command sqlplus -S #{DB_USER}/#{DB_PASSWORD}@#{DB_SID}"
+    echo "Thes script file is --------------------------------------------------------------------------------------------------"
+    cp ${script_file} /home/acoe_rex_app_devst/script_file.txt
+    # Clean up the temporary script file
+    #rm ${script_file}
+
+else
+    echo "Deploy file not found. No deployment actions performed."
+fi
+```
+
+In this modified script, we use bind variables (e.g., `:oracle_log_content`, `:abinitio_log_content`, `:abinitio_commands_log_content`) to pass data to the SQL statements. Bind variables automatically handle large strings, and you don't need to worry about the "String literal is too long" error. The data from your variables is directly inserted into the CLOB
